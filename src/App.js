@@ -18,7 +18,7 @@ export default function App(){
                 <Route path='/password-recovery-from' element={<PasswordRecoveryForm/>}/>
                 <Route path='/landing-Page' element={<LandingPage/>}/>
                 <Route path='/subcription-Page' element={<SubscriptionPage/>}/>
-                <Route path='/dashboard' element={<Dashboard/>}/>
+                <Route path='/' element={<Dashboard/>}/>
                 <Route path='/addpage' element={<AddPage/>}/>
                 <Route path='/editepage' element={<Editepage/>}/>
             </Routes>

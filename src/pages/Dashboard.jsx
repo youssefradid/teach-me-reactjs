@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect }  from 'react';
 
 import {ListItemIcon,Box,IconButton, ListItemText,ListItem,Button,Stack, List, Container, Grid,  Drawer, Table, TableFooter, TableHead, TableBody, TableRow, TableCell, Paper, Typography, Card, CardHeader, Avatar,  CardContent, } from "@mui/material";
 
@@ -8,6 +8,10 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import SaveIcon from '@mui/icons-material/Save';
 
 import {useNavigate} from 'react-router';
+
+import { getFirestore, doc, onSnapshot, collection, query, where } from "firebase/firestore";
+import db from '../firebase'
+
 
 import { styled, useTheme } from '@mui/material/styles';
 
@@ -78,6 +82,21 @@ function Line(props){
 
 export default function Dashboard() {
    
+  const db = getFirestore();
+
+  useEffect(() => {
+    const q = query(collection(db, "Former"))
+    const unsub = onSnapshot(q, (querySnapshot) => {
+      querySnapshot.forEach(doc => {
+        const { firstname, lastname } = doc.data();
+       console.log(firstname + ' ' +lastname);
+    })
+    });
+  }, [])
+
+
+
+
     let history = useNavigate();
    
     let list = [
@@ -124,15 +143,9 @@ export default function Dashboard() {
       ];
 
     
-      
-  
-      const gotoadd = function(){
-        let target = {
-          pathname: '/addpage',
+        const gotoadd = function(){
+          history('addpage');
         };
-        history.push(target);
-      }
-    
 
 
 const drawerWidth = 300;
