@@ -14,11 +14,11 @@ export default function App(){
             <BrowserRouter>
             <Routes >
                 <Route path='/register-from' element={<RegisterForm/>}/>
-                <Route path='/login-from' element={<LoginForm/>}/>
+                <Route path='/' element={<LoginForm/>}/>
                 <Route path='/password-recovery-from' element={<PasswordRecoveryForm/>}/>
                 <Route path='/landing-Page' element={<LandingPage/>}/>
                 <Route path='/subcription-Page' element={<SubscriptionPage/>}/>
-                <Route path='/' element={<Dashboard/>}/>
+                <Route path='/dashboard' element={<Dashboard/>}/>
                 <Route path='/addpage' element={<AddPage/>}/>
                 <Route path='/editepage' element={<Editepage/>}/>
             </Routes>
