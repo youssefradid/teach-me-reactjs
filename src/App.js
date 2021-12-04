@@ -9,6 +9,7 @@ import Dashboard from "./pages/Dashboard";
 import AddPage from "./pages/AddPage";
 import Editepage from "./pages/Editepage";
 
+
 export default function App(){
     return(
             <BrowserRouter>
@@ -23,7 +24,6 @@ export default function App(){
                 <Route path='/editepage' element={<Editepage/>}/>
             </Routes>
             </BrowserRouter>
-
     );
 }
 

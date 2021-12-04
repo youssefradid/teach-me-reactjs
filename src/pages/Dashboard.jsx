@@ -39,24 +39,14 @@ function Line(props){
   
     let history = useNavigate();
   
-    const gotoeditepage = function(element){
-      let target = {
-        pathname: '/editepage',
-        element: element,
-      };
-      
-      history.push(target);
-    }
+    const gotoeditepage = function(){
+      history('/editepage');
+    };
   
-    const loadDeletePage = function(element){
-      let target = {
-        pathname: '/delete-program-page',
-        element: element,
-      };
-  
-      history.push(target);
-    }
-  
+    const loadDeletePage = function(){
+      history('/delete-program-page');
+    };
+
     return(
       <TableRow>
                         <TableCell>{props.element.firstName}</TableCell>
@@ -144,7 +134,7 @@ export default function Dashboard() {
 
     
         const gotoadd = function(){
-          history('addpage');
+          history('/addpage');
         };
 
 

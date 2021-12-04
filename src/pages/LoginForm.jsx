@@ -14,17 +14,7 @@ export default function RegisterForm() {
     return(
         
         <div>
-          <Grid
-          item xs={12}
-          >
-
-            <Paper elevation={5} >
-              
-              <img  style={{backgroundSize:"cover"}}  src="teach-me.png" />
-             
-            </Paper>
-
-          </Grid>
+         
             <Grid
                 container 
                 justifyContent="center"
