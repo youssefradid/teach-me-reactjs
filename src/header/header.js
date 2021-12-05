@@ -12,7 +12,7 @@ const Header = () => (
                         
                     <Stack sx = {{ justifyContent: 'center'}} direction="row" spacing={1}>
                         <img className="photo" src="teach-me.jpg" />
-                        <Typography sx={{ fontSize: 'h2.fontSize' }}>TeachMe</Typography>
+                        <Typography sx={{ color: "#7769AF", fontSize: 'h2.fontSize' }}>TeachMe</Typography>
                     </Stack>
                         
                     </Paper>

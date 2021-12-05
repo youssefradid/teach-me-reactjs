@@ -9,7 +9,7 @@ ReactDOM.render(
   <div  >
   <Header />
   <div style={{
-        backgroundColor: "#ECE9F6"
+        backgroundColor: "#f9f9f9"
     }}>
   <App />
   </div>
