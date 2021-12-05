@@ -73,7 +73,7 @@ function Line(props){
 export default function Dashboard() {
    
   const db = getFirestore();
-
+/*
   useEffect(() => {
     const q = query(collection(db, "Former"))
     const unsub = onSnapshot(q, (querySnapshot) => {
@@ -84,7 +84,7 @@ export default function Dashboard() {
     });
   }, [])
 
-
+*/
 
 
     let history = useNavigate();

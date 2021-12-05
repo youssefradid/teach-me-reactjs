@@ -13,7 +13,7 @@ export default function RegisterForm() {
     const [UserEmail, setUserEmail] = useState("");
     const [UserPassword, setUserPassword] = useState("");
 
-    
+    const submit = (e) => {
     const unsub = onSnapshot(TutorialDataService.getAll(), (querySnapshot) => {
       querySnapshot.forEach(doc => {
         const { firstname, lastname, email, password } = doc.data();
@@ -23,7 +23,7 @@ export default function RegisterForm() {
        }
     })
     });
-
+  }
   
     return(
         
@@ -47,7 +47,7 @@ export default function RegisterForm() {
               </Stack> 
                             
                   <Stack spacing={2} direction={'row'} justifyContent="center">
-                          <Button variant="contained"  color="success">Se connecter</Button>
+                          <Button variant="contained" onClick={submit}>Se connecter</Button>
                           <Button variant="contained" color="primary">Inscription</Button>
                   </Stack>
             </Paper>
