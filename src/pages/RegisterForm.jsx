@@ -6,27 +6,36 @@ import{blue, grey} from "@mui/material/colors";
 import { useNavigate } from "react-router";
 import db from '../firebase'
 import TutorialDataService from "../services/service";
+import alert from "../alert/alert";
 
 export default function RegisterForm() {
   
 
   let history = useNavigate();
-  const [customerName, setCustomerName] = useState("");
-  const [customerPrenom, setCustomerPrenom] = useState("");
+  const [UserName, setUserName] = useState("");
+  const [UserLastname, setUserLastname] = useState("");
+  const [UserEmail, setUserEmail] = useState("");
+  const [UserPassword, setUserPassword] = useState("");
 
+  const submit = (e) => {
+    let data = {
+      firstname: UserName,
+      lastname: UserLastname,
+      password : UserEmail,
+      email : UserPassword,
+    }
 
-    const submit = (e) => {
+  TutorialDataService.create(data)
+    .then(() => {
+      //@todo : alerting
+      console.log("Created new item successfully!");
+      history('/');
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+}
 
-      }
-
-    
-
-  const gotolandingpage = function(){
-    let target = {
-      pathname: '/landing-Page',
-    };
-    history.push(target);
-  }
 
   const gotologinpage = function(){
     history('/');
@@ -43,10 +52,10 @@ export default function RegisterForm() {
                         <Typography color={blue[800]} variant='button'>Créez votre compte gratuit</Typography>
                         <Typography color={grey[500]} variant='h8'>Teach-me est le logiciel de gestion formation utilisé par le plus grand nombre d'organismes de formations.
                             sont principalement les apprenants (Learner)</Typography>
-                        <TextField label="Nom" variant="outlined" helperText="Tappez ici Votre Nom" onChange={(e) => setCustomerName(e.target.value)}/>
-                        <TextField label="Prenom" variant="outlined" helperText="Tappez ici Votre Prenom" onChange={(e) => setCustomerPrenom(e.target.value)}/>
-                        <TextField label="Email" variant="outlined" helperText="Tappez ici Votre Email"/>
-                        <TextField type="password" label="Password" variant="outlined" helperText="Tappez ici Votre Password"/>     
+                        <TextField label="Nom" variant="outlined" helperText="Tappez ici Votre Nom" onChange={(e) => setUserName(e.target.value)}/>
+                        <TextField label="Prenom" variant="outlined" helperText="Tappez ici Votre Prenom" onChange={(e) => setUserLastname(e.target.value)}/>
+                        <TextField label="Email" variant="outlined" helperText="Tappez ici Votre Email" onChange={(e) => setUserEmail(e.target.value)}/>
+                        <TextField type="password" label="Password" variant="outlined" helperText="Tappez ici Votre Password" onChange={(e) => setUserPassword(e.target.value)}/>     
                     </Stack> 
               
                     <Stack sx={{margin: 3}} spacing={2} direction={'row'} justifyContent="center">
@@ -74,8 +83,6 @@ export default function RegisterForm() {
                   </Paper>  
             </Grid>
         </Grid>
-
-
         </div>
     );
 }
