@@ -3,7 +3,7 @@ import { collection, addDoc, updateDoc, deleteDoc, getDoc , getDocs } from "fire
 import { getFirestore, doc, onSnapshot, query, where } from "firebase/firestore";
 
 const database = getFirestore();
-const db = collection(database, "Former");
+const db = collection(database, "Session");
 
 
 class TutorialDataService {

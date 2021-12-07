@@ -1,6 +1,6 @@
 import React, { useState, useEffect }  from 'react';
 import { Button, Paper, Stack, TextField, Typography,RadioGroup,Grid, FormControlLabel,Box, FormLabel,Checkbox,FormGroup, Select, MenuItem } from "@mui/material";
-
+import Header from '../header/header';
 import{blue, grey} from "@mui/material/colors";
 import { useNavigate } from "react-router";
 import TutorialDataService from "../services/service";
@@ -24,11 +24,15 @@ export default function RegisterForm() {
     })
     });
   }
+
+    const gotoRegister = function(){
+      history('/register-from');
+    };
   
     return(
         
         <div>
-         
+         <Header/>
             <Grid
                 container 
                 justifyContent="center"
@@ -48,7 +52,7 @@ export default function RegisterForm() {
                             
                   <Stack spacing={2} direction={'row'} justifyContent="center">
                           <Button variant="contained" onClick={submit}>Se connecter</Button>
-                          <Button variant="contained" color="primary">Inscription</Button>
+                          <Button variant="contained" onClick={gotoRegister} color="primary">Inscription</Button>
                   </Stack>
             </Paper>
           

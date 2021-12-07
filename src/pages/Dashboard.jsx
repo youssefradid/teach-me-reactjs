@@ -1,7 +1,6 @@
 import React, { useState, useEffect }  from 'react';
 
 import {ListItemIcon,Box,IconButton, ListItemText,ListItem,Button,Stack, List, Container, Grid,  Drawer, Table, TableFooter, TableHead, TableBody, TableRow, TableCell, Paper, Typography, Card, CardHeader, Avatar,  CardContent, } from "@mui/material";
-
 import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -9,9 +8,9 @@ import SaveIcon from '@mui/icons-material/Save';
 
 import {useNavigate} from 'react-router';
 
-import { getFirestore, doc, onSnapshot, collection, query, where } from "firebase/firestore";
+import { getFirestore, doc, onSnapshot, collection, query, where, getDocs, getDoc } from "firebase/firestore";
 import db from '../firebase'
-
+import TutorialDataService from "../services/service";
 
 import { styled, useTheme } from '@mui/material/styles';
 
@@ -33,6 +32,7 @@ import IndeterminateCheckBoxIcon from '@mui/icons-material/IndeterminateCheckBox
 import Delete from '@mui/icons-material/Delete';
 import Create from '@mui/icons-material/Create';
 import AddCircle from '@mui/icons-material/AddCircle';
+import AccessibilityTwoTone from '@mui/icons-material/AccessibilityTwoTone';
 
 
 function Line(props){
@@ -48,6 +48,7 @@ function Line(props){
     };
 
     return(
+      
       <TableRow>
                         <TableCell>{props.element.firstName}</TableCell>
                          <TableCell>{props.element.lastName}</TableCell>
@@ -73,18 +74,6 @@ function Line(props){
 export default function Dashboard() {
    
   const db = getFirestore();
-/*
-  useEffect(() => {
-    const q = query(collection(db, "Former"))
-    const unsub = onSnapshot(q, (querySnapshot) => {
-      querySnapshot.forEach(doc => {
-        const { firstname, lastname } = doc.data();
-       console.log(firstname + ' ' +lastname);
-    })
-    });
-  }, [])
-
-*/
 
 
     let history = useNavigate();
@@ -242,7 +231,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
           {['Gestion des programmes', 'Gestion des sessions', 'Gestion des Formateurs'].map((text, index) => (
             <ListItem button key={text}>
               <ListItemIcon>
-                {index % 2 === 0 ? <IndeterminateCheckBoxIcon /> : <IndeterminateCheckBoxIcon />}
+                {index % 2 === 0 ? <AccessibilityTwoTone /> : <AccessibilityTwoTone />}
               </ListItemIcon>
               <ListItemText primary={text} />
             </ListItem>
@@ -290,7 +279,8 @@ const DrawerHeader = styled('div')(({ theme }) => ({
                     <TableCell>Téléphone</TableCell>
                     <TableCell>Programme</TableCell>
                     <TableCell>Session</TableCell>
-                    <TableCell>Niveau</TableCell>
+                    <TableCell>Modifier</TableCell>
+                    <TableCell>Supprimer</TableCell>
                   </TableRow>
                 </TableHead>
 

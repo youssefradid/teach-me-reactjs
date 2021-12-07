@@ -7,6 +7,7 @@ import { useNavigate } from "react-router";
 import db from '../firebase'
 import TutorialDataService from "../services/service";
 import alert from "../alert/alert";
+import Header from '../header/header';
 
 export default function RegisterForm() {
   
@@ -42,7 +43,7 @@ export default function RegisterForm() {
   };
     return(
         <div>
-    
+    <    Header/>
           <Grid container spacing={-20}>
             
             <Grid item xs={8}>
