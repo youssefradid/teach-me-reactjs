@@ -1,14 +1,15 @@
 import firebase from "../firebase";
-import { collection, addDoc, updateDoc, deleteDoc  } from "firebase/firestore"; 
+import { collection, addDoc, updateDoc, deleteDoc, getDoc , getDocs } from "firebase/firestore"; 
 import { getFirestore, doc, onSnapshot, query, where } from "firebase/firestore";
 
 const database = getFirestore();
-const db = collection(database, "Former");
+const db = collection(database, "Session");
 
 
 class TutorialDataService {
-  getAll() {
-    return db;
+
+  getAll () {
+    return   query(db);
   }
   
   create = async (tutorial) => {
