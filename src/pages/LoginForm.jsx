@@ -28,7 +28,7 @@ export default function RegisterForm() {
                   <Typography color={blue[800]} variant='button'>Login Page</Typography>
 
                   <TextField label="Email" variant="outlined" helperText="Tappez ici Votre Email" required /> 
-                  <TextField type="password" label="Password" variant="outlined" helperText="Tappez ici Votre mot de passe" required/>
+                  <TextField type="Mot de passe" label="Password" variant="outlined" helperText="Tappez ici Votre mot de passe" required/>
                         
               </Stack> 
                             
