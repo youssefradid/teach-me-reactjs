@@ -10,7 +10,14 @@ import {useNavigate} from 'react-router';
 
 import { getFirestore, doc, onSnapshot, collection, query, where, getDocs, getDoc } from "firebase/firestore";
 import db from '../firebase'
-import TutorialDataService from "../services/service";
+
+import SessionService from "../services/service";
+import LearnerService from "../services/LearnerService";
+import ProgramService from "../services/ProgramService";
+import PackService from "../services/PackService";
+import SouscriptionService from "../services/SouscriptionService";
+import Learner from "../entity/Learner";
+
 
 import { styled, useTheme } from '@mui/material/styles';
 
@@ -33,6 +40,7 @@ import Delete from '@mui/icons-material/Delete';
 import Create from '@mui/icons-material/Create';
 import AddCircle from '@mui/icons-material/AddCircle';
 import AccessibilityTwoTone from '@mui/icons-material/AccessibilityTwoTone';
+import { CoPresentOutlined } from '@mui/icons-material';
 
 
 function Line(props){
@@ -50,12 +58,13 @@ function Line(props){
     return(
       
       <TableRow>
-                        <TableCell>{props.element.firstName}</TableCell>
-                         <TableCell>{props.element.lastName}</TableCell>
-                          <TableCell>{props.element.email}</TableCell>
-                          <TableCell>{props.element.phone}</TableCell>
-                          <TableCell>{props.element.program}</TableCell>
-                          <TableCell>{props.element.session}</TableCell>
+        <TableCell>{props.element.firstname}</TableCell>
+          <TableCell>{props.element.lastname}</TableCell>
+          <TableCell>{props.element.email}</TableCell>
+          <TableCell>{props.element.phone}</TableCell>
+          <TableCell>{props.element.program}</TableCell>
+          <TableCell>{props.element.startDate}</TableCell>
+          <TableCell>{props.element.endDate}</TableCell>
                           
         <TableCell>
           <IconButton size="small" onClick={() => gotoeditepage(props.element)}>
@@ -72,60 +81,114 @@ function Line(props){
   }
 
 export default function Dashboard() {
-   
-  const db = getFirestore();
-
 
     let history = useNavigate();
-   
-    let list = [
-        {
-            "id" :1,
-            "firstName" : "esther",
-            "lastName" : "esther",
-            "email" : "esther",
-            "phone" : "esther",
-            "program" : "esther",
-            "session" : "esther",
-           
-        },
-        {
-            "id" :2,
-            "firstName" : "john",
-            "lastName" : "john",
-            "email" : "john",
-            "phone" : "john",
-            "program" : "john",
-            "session" : "john",
-          
-        },
-        {
-            "id" :3,
-            "firstName" : "esther",
-            "lastName" : "esther",
-            "email" : "esther",
-            "phone" : "esther",
-            "program" : "esther",
-            "session" : "esther",
+    const [customersData, setCustomersData] = useState([]);
+
+    var dataToShow = [];
+    var learnerTab = [];
+    var sessionTab = [];
+
+    const allSessions = SessionService.getAll();
+    const allLearners = LearnerService.getAll();
+    const allProgram = ProgramService.getAll();
+    const allPacks = PackService.getAll();
+    const allSouscriptions = SouscriptionService.getAll();
+
+
+    allSouscriptions.then(function(souscription) {
+
+      //console.log(souscription);
+
+      
+      souscription.forEach(doc => {
             
-        },
-        {
-            "id" :4,
-            "firstName" : "esther",
-            "lastName" : "esther",
-            "email" : "esther",
-            "phone" : "esther",
-            "program" : "esther",
-            "session" : "esther",
+
+
+        Promise.all([LearnerService.getById(doc.learnerRef.id),SessionService.getById(doc.sessionRef.id)]).then(function(result){
+
+
+                  const combined = result.reduce((acc, result) => { 
+                    return acc.concat(result)
+                 }, [])
+
+                 const newItem =[ Object.assign({}, combined[0], combined[1])];
+
+                     setCustomersData
+                      (
+                        newItem
+                      )
+
+
+        })
+  
+      })
+      })
           
-        },
-      ];
+   
+ 
+    /*
+    allSessions.then(function(session) {
+
+      console.log(session);
+
+      session.forEach(function(it){
+
+        allLearners.then(function(learner) {
+          learner.forEach(function(item){
+            if(item.id == it.leanerRef.id){
+              dataToShow.push(
+                {
+                  "id" : item.id,
+                  "firstname": item.firstname,
+                  "lastname": item.lastname,
+                  "email": item.email,
+                  "phone": item.phone,
+                  "program" : it.programRef.id,
+                  "session" : it.endDate
+                }
+              )
+                  
+            }
+          })
+        })
+
+
+        allProgram.then(function(program){
+          program.forEach(function(item){
+            if(item.id == it.programRef.id){
+
+              dataToShow = dataToShow.concat({
+                "goal" : item.goal,
+                "title" : item.title,
+                "description" : item.description,
+               
+              });
 
     
+              console.log(dataToShow);
+             setCustomersData
+                  (
+                    dataToShow
+                  )
+            }
+          })
+        })
+
+
+      })
+     })
+    
+      console.log(dataToShow);*/
+
+
         const gotoadd = function(){
           history('/addpage');
         };
-
+        
+        const logout = function() {
+          window.location.href = '/';
+      };
 
 const drawerWidth = 300;
 
@@ -190,6 +253,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 
 
   return (
+    
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
       <AppBar position="fixed" open={open}>
@@ -240,7 +304,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
         <Divider />
         <List>
           {[ 'Logout'].map((text, index) => (
-            <ListItem button key={text}>
+            <ListItem button key={text} >
               <ListItemIcon>
                 {index % 2 === 0 ? <LogoutIcon /> : <LogoutIcon />}
               </ListItemIcon>
@@ -278,7 +342,8 @@ const DrawerHeader = styled('div')(({ theme }) => ({
                     <TableCell>Email</TableCell>
                     <TableCell>Téléphone</TableCell>
                     <TableCell>Programme</TableCell>
-                    <TableCell>Session</TableCell>
+                    <TableCell>Session start date</TableCell>
+                    <TableCell>Session end date</TableCell>
                     <TableCell>Modifier</TableCell>
                     <TableCell>Supprimer</TableCell>
                   </TableRow>
@@ -286,13 +351,15 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 
                 <TableBody>
                 {
-                  list.map(function(item){
-                    return(<Line element={item}/>);
-                  })
+                    customersData.map(function(item){
+                      return(<Line element={item}/>);
+
+                    })
+                  
                 }
               </TableBody>
                 <TableFooter>
-                  <Typography variant='body2'>Nombre d'inscrits : {list.length}</Typography>
+                  <Typography variant='body2'>Nombre d'inscrits : {customersData.length}</Typography>
                 </TableFooter>
               </Table>
             </Grid>

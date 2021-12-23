@@ -3,52 +3,34 @@ import { collection, addDoc, updateDoc, deleteDoc, getDoc , getDocs } from "fire
 import { getFirestore, doc, onSnapshot, query, where } from "firebase/firestore";
 
 const database = getFirestore();
-const db = collection(database, "Session");
+const db = collection(database, "Program");
 
 
-class SessionService {
+class ProgramService {
 
   getAll = async () => {
     let dataToShow = [];
     const Alldocs = await getDocs(db) 
     Alldocs.forEach((doc) => {
-      const { endDate, programRef, startDate } = doc.data();
+      const { description, goal, title } = doc.data();
           dataToShow.push(
             {
               "id" : doc.id,
-              "endDate": endDate,
-              "programRef": programRef,
-              "startDate": startDate,
+              "description": description,
+              "goal": goal,
+              "title": title,
             }
           )
     });
     return dataToShow;
   }
   
-  getById = async (id) => {
-    let dataToShow = [];
-    const docRef = doc(db, id.trim());
-    const docSnap = await getDoc(docRef);
-  
-      const { endDate, programRef, startDate } = docSnap.data();
-      dataToShow.push(
-        {
-          "id" : docSnap.id,
-          "endDate": endDate,
-          "programRef": programRef,
-          "startDate": startDate,
-        }
-      )
-    return dataToShow;
-  }
-
-  
   create = async (tutorial) => {
     return  await addDoc(db, tutorial);
   }
 
   update = async (tutorial,id) => {
-    const washingtonRef = doc(database, "Session", id);
+    const washingtonRef = doc(database, "Program", id);
     return await updateDoc(washingtonRef, {
         firstname: tutorial.firstname,
         lastname: tutorial.lastname
@@ -56,9 +38,10 @@ class SessionService {
   }
 
   delete = async (id) => {
-    const washingtonRef = doc(database, "Session", id);
+    const washingtonRef = doc(database, "Program", id);
     return await deleteDoc(washingtonRef);
   }
+
 }
 
-export default new SessionService();
+export default new ProgramService();
