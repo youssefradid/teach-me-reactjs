@@ -79,6 +79,8 @@ export default function RegisterForm() {
                                       
                   <Typography color={blue[800]} variant='button'>Login Page</Typography>
 
+
+
                   <TextField label="Email" variant="outlined" helperText="Tappez ici Votre Email" onChange={(e) => setUserEmail(e.target.value)} required /> 
                   <TextField type="password" label="Password" variant="outlined" helperText="Tappez ici Votre mot de passe" onChange={(e) => setUserPassword(e.target.value)} required/>
                   

@@ -39,7 +39,7 @@ export default function AddPage() {
           
             <Stack spacing={1}>    
                 <Typography color={blue[800]} variant='button'>Ajouter un nouveaux compte</Typography>
-                <Typography color={grey[500]} variant='h8'>Vous devez remplir tous les champs obligatoires. </Typography>
+                <Typography color={grey[500]} variant='body1'>Vous devez remplir tous les champs obligatoires. </Typography>
                 <TextField label="Nom" variant="outlined" helperText="Tappez ici Votre Nom"/>
                 <TextField label="Prenom" variant="outlined" helperText="Tappez ici Votre Prenom"/>
                 <TextField label="Email" variant="outlined" helperText="Tappez ici Votre Email"/>
