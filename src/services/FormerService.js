@@ -12,14 +12,14 @@ class LearnerService {
     let dataToShow = [];
     const Alldocs = await getDocs(db) 
     Alldocs.forEach((doc) => {
-      const { firstname, lastname, email, phone, password } = doc.data();
+      const { firstname, lastname, email, specialisation, password } = doc.data();
           dataToShow.push(
             {
               "id" : doc.id,
               "firstname": firstname,
               "lastname": lastname,
               "email": email,
-              "phone": phone,
+              "specialisation": specialisation,
               "password" : password
             }
           )
@@ -35,7 +35,8 @@ class LearnerService {
     const washingtonRef = doc(database, "Former", id);
     return await updateDoc(washingtonRef, {
         firstname: tutorial.firstname,
-        lastname: tutorial.lastname
+        lastname: tutorial.lastname,
+        email: tutorial.email,
       });
   }
 

@@ -2,15 +2,13 @@ import React, { useState, useEffect }  from 'react';
 
 import {ListItemIcon,Box,IconButton, ListItemText,ListItem,Button,Stack, List, Container, Grid,  Drawer, Table, TableFooter, TableHead, TableBody, TableRow, TableCell, Paper, Typography, Card, CardHeader, Avatar,  CardContent, } from "@mui/material";
 import{blue, grey} from "@mui/material/colors";
-import LearnerService from "../services/LearnerService";
+import FormerService from "../services/FormerService";
 import SaveIcon from '@mui/icons-material/Save';
 import Delete from '@mui/icons-material/Delete';
 import Create from '@mui/icons-material/Create';
 import {useNavigate, useLocation} from 'react-router';
-
 import AddIcon from '@mui/icons-material/Add';
-
-import AlertDialog from "../modal/modalAddLearner";
+import AlertDialog from "../modal/modalAddFormer";
 
 function Line(props){
 
@@ -21,7 +19,7 @@ function Line(props){
       };
     
       const loadDeletePage = function(id){
-        LearnerService.delete(id);
+        FormerService.delete(id);
       };
 
 
@@ -31,7 +29,7 @@ function Line(props){
         <TableCell>{props.element.firstname}</TableCell>
           <TableCell>{props.element.lastname}</TableCell>
           <TableCell>{props.element.email}</TableCell>
-          <TableCell>{props.element.phone}</TableCell>
+          <TableCell>{props.element.specialisation}</TableCell>
           <TableCell>
           <AlertDialog parentToChild={props.element}/>
         </TableCell>
@@ -47,19 +45,18 @@ function Line(props){
 
 export default function Learners() {
   
-
     let history = useNavigate();
 
     const gotoadd = function(){
         history('/addpage');
       };
 
-      const [learnersData, setLearnersData] = useState([]);
+      const [formersData, setFormersData] = useState([]);
 
-      LearnerService.getAll().then(function(learner) {
+      FormerService.getAll().then(function(former) {
 
-        setLearnersData(
-                learner
+        setFormersData(
+                former
             )
 
     })
@@ -80,7 +77,7 @@ export default function Learners() {
                     <TableCell>Nom</TableCell>
                     <TableCell>Prénom</TableCell>
                     <TableCell>Email</TableCell>
-                    <TableCell>Téléphone</TableCell>
+                    <TableCell>specialisation</TableCell>
                     <TableCell>Modifier</TableCell>
                     <TableCell>Supprimer</TableCell>
                   </TableRow>
@@ -88,7 +85,7 @@ export default function Learners() {
 
                 <TableBody>
                     {
-                            learnersData.map(function(item){
+                            formersData.map(function(item){
                                 return(<Line element={item}/>);
                                 })
                 }

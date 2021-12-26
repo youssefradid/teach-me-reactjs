@@ -4,14 +4,11 @@ import { Button, Paper, Stack, TextField,Grid, Typography,RadioGroup, FormContro
 import { getFirestore, doc, onSnapshot, collection, query, where } from "firebase/firestore";
 import{blue, grey} from "@mui/material/colors";
 import { useNavigate } from "react-router";
-import db from '../firebase'
 import FormerService from "../services/FormerService";
-import alert from "../alert/alertAddLearner";
 import Header from '../header/header';
 
 export default function RegisterForm() {
   
-
   let history = useNavigate();
   const [UserName, setUserName] = useState("");
   const [UserLastname, setUserLastname] = useState("");
