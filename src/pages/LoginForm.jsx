@@ -85,7 +85,7 @@ export default function RegisterForm() {
                   <TextField type="password" label="Password" variant="outlined" helperText="Tappez ici Votre mot de passe" onChange={(e) => setUserPassword(e.target.value)} required/>
                   
                   <FormControl fullWidth>
-                  <InputLabel id="demo-simple-select-label">Age</InputLabel>
+                  <InputLabel id="demo-simple-select-label">Vous etes ?</InputLabel>
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
@@ -93,7 +93,6 @@ export default function RegisterForm() {
                     onChange={(e) => setUserIdentity(e.target.value)}
                   >
                     <MenuItem value={"etud"}>Etudiant</MenuItem>
-                    <MenuItem value={"coor"}>Coordinateur</MenuItem>
                     <MenuItem value={"form"}>Formateur</MenuItem>
                   </Select>
                 </FormControl>    

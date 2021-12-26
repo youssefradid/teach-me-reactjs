@@ -62,20 +62,10 @@ function Line(props){
           <TableCell>{props.element.lastname}</TableCell>
           <TableCell>{props.element.email}</TableCell>
           <TableCell>{props.element.phone}</TableCell>
-          <TableCell>{props.element.program}</TableCell>
+          <TableCell>{props.element.title}</TableCell>
           <TableCell>{props.element.startDate}</TableCell>
           <TableCell>{props.element.endDate}</TableCell>
                           
-        <TableCell>
-          <IconButton size="small" onClick={() => gotoeditepage(props.element)}>
-            <Create fontSize="inherit" />
-          </IconButton>
-        </TableCell>
-        <TableCell>
-          <IconButton size="small" onClick={() => loadDeletePage(props.element)}>
-            <Delete fontSize="inherit" />
-          </IconButton>
-        </TableCell>
       </TableRow>
     );
   }
@@ -85,102 +75,28 @@ export default function Dashboard() {
     let history = useNavigate();
     const [customersData, setCustomersData] = useState([]);
 
-    var dataToShow = [];
-    var learnerTab = [];
-    var sessionTab = [];
 
-    const allSessions = SessionService.getAll();
-    const allLearners = LearnerService.getAll();
-    const allProgram = ProgramService.getAll();
-    const allPacks = PackService.getAll();
-    const allSouscriptions = SouscriptionService.getAll();
+    SouscriptionService.getAll().then(function(souscription) {
 
-
-    allSouscriptions.then(function(souscription) {
-
-      //console.log(souscription);
-
-      
       souscription.forEach(doc => {
             
-
-
         Promise.all([LearnerService.getById(doc.learnerRef.id),SessionService.getById(doc.sessionRef.id)]).then(function(result){
 
+            const combined = result.reduce((acc, result) => { 
+                        return acc.concat(result)
+                    }, []);
 
-                  const combined = result.reduce((acc, result) => { 
-                    return acc.concat(result)
-                 }, [])
+                    const newItem = [ Object.assign({}, combined[0], combined[1])];
 
-                 const newItem =[ Object.assign({}, combined[0], combined[1])];
-
-                     setCustomersData
-                      (
-                        newItem
-                      )
-
-
-        })
+                        setCustomersData
+                          (
+                            newItem
+                          )
+            })
   
       })
       })
           
-   
- 
-    /*
-    allSessions.then(function(session) {
-
-      console.log(session);
-
-      session.forEach(function(it){
-
-        allLearners.then(function(learner) {
-          learner.forEach(function(item){
-            if(item.id == it.leanerRef.id){
-              dataToShow.push(
-                {
-                  "id" : item.id,
-                  "firstname": item.firstname,
-                  "lastname": item.lastname,
-                  "email": item.email,
-                  "phone": item.phone,
-                  "program" : it.programRef.id,
-                  "session" : it.endDate
-                }
-              )
-                  
-            }
-          })
-        })
-
-
-        allProgram.then(function(program){
-          program.forEach(function(item){
-            if(item.id == it.programRef.id){
-
-              dataToShow = dataToShow.concat({
-                "goal" : item.goal,
-                "title" : item.title,
-                "description" : item.description,
-               
-              });
-
-    
-              console.log(dataToShow);
-             setCustomersData
-                  (
-                    dataToShow
-                  )
-            }
-          })
-        })
-
-
-      })
-     })
-    
-      console.log(dataToShow);*/
-
 
         const gotoadd = function(){
           history('/addpage');
@@ -292,7 +208,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
         </DrawerHeader>
         <Divider />
         <List>
-          {['Gestion des programmes', 'Gestion des sessions', 'Gestion des Formateurs'].map((text, index) => (
+          {['Gestion des étudiants','Gestion des programmes', 'Gestion des sessions', 'Gestion des Formateurs'].map((text, index) => (
             <ListItem button key={text}>
               <ListItemIcon>
                 {index % 2 === 0 ? <AccessibilityTwoTone /> : <AccessibilityTwoTone />}
@@ -344,8 +260,6 @@ const DrawerHeader = styled('div')(({ theme }) => ({
                     <TableCell>Programme</TableCell>
                     <TableCell>Session start date</TableCell>
                     <TableCell>Session end date</TableCell>
-                    <TableCell>Modifier</TableCell>
-                    <TableCell>Supprimer</TableCell>
                   </TableRow>
                 </TableHead>
 

@@ -13,7 +13,9 @@ export default function Editepage() {
   let location  = useLocation();
   let history = useNavigate();
 
-  let [nom, setNom] = React.useState(location.element.firstName);
+  console.log(location.element);
+
+  let [nom, setNom] = React.useState(location.element.firstname);
   let [prenom, setPrenom] = React.useState(location.element.lastName);
   let [email, setEmail] = React.useState(location.element.email);
   let [password, setPassword] = React.useState(location.element.phone);

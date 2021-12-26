@@ -55,7 +55,9 @@ getById = async (id) => {
     const washingtonRef = doc(database, "Leaner", id);
     return await updateDoc(washingtonRef, {
         firstname: tutorial.firstname,
-        lastname: tutorial.lastname
+        lastname: tutorial.lastname,
+        email: tutorial.email,
+        phone: tutorial.phone
       });
   }
 
@@ -63,9 +65,6 @@ getById = async (id) => {
     const washingtonRef = doc(database, "Leaner", id);
     return await deleteDoc(washingtonRef);
   }
-
-
-
 }
 
 export default new LearnerService();

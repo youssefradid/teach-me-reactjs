@@ -25,6 +25,24 @@ class ProgramService {
     return dataToShow;
   }
   
+  getById = async (id) => {
+    let dataToShow = [];
+    const docRef = doc(db, id.trim());
+    const docSnap = await getDoc(docRef);
+  
+      const { description, title, goal } = docSnap.data();
+      dataToShow = [
+        {
+          "id" : docSnap.id,
+          "description": description,
+          "title": title,
+          "goal": goal,
+        }
+      ];
+    return dataToShow;
+  }
+
+  
   create = async (tutorial) => {
     return  await addDoc(db, tutorial);
   }

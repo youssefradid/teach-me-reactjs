@@ -8,7 +8,7 @@ import SubscriptionPage from "./pages/SubscriptionPage";
 import Dashboard from "./pages/Dashboard";
 import AddPage from "./pages/AddPage";
 import Editepage from "./pages/Editepage";
-
+import Learners from "./pages/Learners";
 
 export default function App(){
     return(
@@ -22,6 +22,7 @@ export default function App(){
                 <Route path='/dashboard' element={<Dashboard/>}/>
                 <Route path='/addpage' element={<AddPage/>}/>
                 <Route path='/editepage' element={<Editepage/>}/>
+                <Route path='/learners' element={<Learners/>}/>
             </Routes>
             </BrowserRouter>
     );

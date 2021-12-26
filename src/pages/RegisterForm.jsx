@@ -5,8 +5,8 @@ import { getFirestore, doc, onSnapshot, collection, query, where } from "firebas
 import{blue, grey} from "@mui/material/colors";
 import { useNavigate } from "react-router";
 import db from '../firebase'
-import TutorialDataService from "../services/service";
-import alert from "../alert/alert";
+import FormerService from "../services/FormerService";
+import alert from "../alert/alertAddLearner";
 import Header from '../header/header';
 
 export default function RegisterForm() {
@@ -26,7 +26,7 @@ export default function RegisterForm() {
       email : UserPassword,
     }
 
-  TutorialDataService.create(data)
+    FormerService.create(data)
     .then(() => {
       //@todo : alerting
       console.log("Created new item successfully!");
