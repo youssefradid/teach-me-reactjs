@@ -167,6 +167,9 @@ const DrawerHeader = styled('div')(({ theme }) => ({
     setOpen(false);
   };
 
+  var listItemText = { 'Gestion des étudiants' : "/learners", 'Gestion des formateurs' : "/formers"};
+
+  var listItemTextUnderDivider = { 'Logout' : "/"};
 
   return (
     
@@ -208,23 +211,23 @@ const DrawerHeader = styled('div')(({ theme }) => ({
         </DrawerHeader>
         <Divider />
         <List>
-          {['Gestion des étudiants','Gestion des programmes', 'Gestion des sessions', 'Gestion des Formateurs'].map((text, index) => (
-            <ListItem button key={text}>
+          {Object.keys(listItemText).map((key, index) => (
+            <ListItem button onClick={() => history(listItemText[key])}>
               <ListItemIcon>
                 {index % 2 === 0 ? <AccessibilityTwoTone /> : <AccessibilityTwoTone />}
               </ListItemIcon>
-              <ListItemText primary={text} />
+              <ListItemText primary={key} />
             </ListItem>
           ))}
         </List>
         <Divider />
         <List>
-          {[ 'Logout'].map((text, index) => (
-            <ListItem button key={text} >
+          {Object.keys(listItemTextUnderDivider).map((key, index) => (
+            <ListItem button  onClick={() => history(listItemTextUnderDivider[key])}>  {/* onClick={() => history('/learners')}*/}
               <ListItemIcon>
                 {index % 2 === 0 ? <LogoutIcon /> : <LogoutIcon />}
               </ListItemIcon>
-              <ListItemText primary={text} />
+              <ListItemText primary={key} />
             </ListItem>
           ))}
         </List>

@@ -17,7 +17,7 @@ export default function AlertDialog({parentToChild})  {
   const [UserName, setUserName] = useState("");
   const [UserLastname, setUserLastname] = useState("");
   const [UserEmail, setUserEmail] = useState("");
-  const [UserPhone, setUserPhone] = useState("");
+  const [Userspecialisation, setUserspecialisation] = useState("");
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -32,7 +32,7 @@ export default function AlertDialog({parentToChild})  {
       "firstname" : UserName,
       "lastname" : UserLastname,
       "email" : UserEmail,
-      "phone" : UserPhone
+      "specialisation" : Userspecialisation
     };
 
     FormerService.update(former,id);
@@ -71,7 +71,7 @@ export default function AlertDialog({parentToChild})  {
                 <TextField  variant="outlined" helperText="Tappez ici Votre Nom" onChange={(e) => setUserName(e.target.value)}/>
                 <TextField  variant="outlined" helperText="Tappez ici Votre Prenom" onChange={(e) => setUserLastname(e.target.value)}/>
                 <TextField    variant="outlined" helperText="Tappez ici Votre Email" onChange={(e) => setUserEmail(e.target.value)}/>
-                <TextField  variant="outlined" helperText="Tappez ici Votre téléphone" onChange={(e) => setUserPhone(e.target.value)}/>
+                <TextField  variant="outlined" helperText="Tappez ici Votre spécialisation" onChange={(e) => setUserspecialisation(e.target.value)}/>
             </Stack> 
            
          <Stack sx={{margin: 3}} spacing={2} direction={'row'} justifyContent="center">

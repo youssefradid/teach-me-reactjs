@@ -37,6 +37,7 @@ class LearnerService {
         firstname: tutorial.firstname,
         lastname: tutorial.lastname,
         email: tutorial.email,
+        specialisation : tutorial.specialisation
       });
   }
 
