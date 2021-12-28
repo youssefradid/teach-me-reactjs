@@ -236,6 +236,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
         <DrawerHeader />
       
 
+  
     <Container>
     
       <Grid container rowSpacing={2} columnSpacing={2}>
@@ -280,18 +281,11 @@ const DrawerHeader = styled('div')(({ theme }) => ({
                 </TableFooter>
               </Table>
             </Grid>
-
-           
-
           </Grid>
         </Grid>
       </Grid>
-
-
-
-
     </Container>
-
+              
 
 
       </Main>

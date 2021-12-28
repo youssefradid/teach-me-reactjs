@@ -14,10 +14,11 @@ import DialogTitle from '@mui/material/DialogTitle';
 export default function AlertDialog({parentToChild})  {
   
   const [open, setOpen] = useState(false);
-  const [UserName, setUserName] = useState("");
-  const [UserLastname, setUserLastname] = useState("");
-  const [UserEmail, setUserEmail] = useState("");
-  const [Userspecialisation, setUserspecialisation] = useState("");
+  const [UserName, setUserName] = useState(parentToChild.firstname);
+  const [UserLastname, setUserLastname] = useState(parentToChild.lastname);
+  const [UserEmail, setUserEmail] = useState(parentToChild.email);
+  const [Userspecialisation, setUserspecialisation] = useState(parentToChild.specialisation);
+
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -68,10 +69,10 @@ export default function AlertDialog({parentToChild})  {
             <Stack spacing={1}>    
                 <Typography color={blue[800]} variant='button'>Modifier un formateur</Typography>
                 <Typography color={grey[500]} variant='body1'>Vous devez remplir tous les champs obligatoires. </Typography>
-                <TextField  variant="outlined" helperText="Tappez ici Votre Nom" onChange={(e) => setUserName(e.target.value)}/>
-                <TextField  variant="outlined" helperText="Tappez ici Votre Prenom" onChange={(e) => setUserLastname(e.target.value)}/>
-                <TextField    variant="outlined" helperText="Tappez ici Votre Email" onChange={(e) => setUserEmail(e.target.value)}/>
-                <TextField  variant="outlined" helperText="Tappez ici Votre spécialisation" onChange={(e) => setUserspecialisation(e.target.value)}/>
+                <TextField value={UserName} variant="outlined" helperText="Tappez ici Votre Nom" onChange={(e) => setUserName(e.target.value)}/>
+                <TextField value={UserLastname} variant="outlined" helperText="Tappez ici Votre Prenom" onChange={(e) => setUserLastname(e.target.value)}/>
+                <TextField value={UserEmail} variant="outlined" helperText="Tappez ici Votre Email" onChange={(e) => setUserEmail(e.target.value)}/>
+                <TextField value={Userspecialisation} variant="outlined" helperText="Tappez ici Votre spécialisation" onChange={(e) => setUserspecialisation(e.target.value)}/>
             </Stack> 
            
          <Stack sx={{margin: 3}} spacing={2} direction={'row'} justifyContent="center">
