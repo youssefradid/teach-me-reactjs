@@ -32,8 +32,8 @@ class PackService {
   update = async (tutorial,id) => {
     const washingtonRef = doc(database, "Pack", id);
     return await updateDoc(washingtonRef, {
-        firstname: tutorial.firstname,
-        lastname: tutorial.lastname
+        label: tutorial.label,
+        price: tutorial.price
       });
   }
 

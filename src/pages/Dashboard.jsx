@@ -167,7 +167,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
     setOpen(false);
   };
 
-  var listItemText = { 'Gestion des étudiants' : "/learners", 'Gestion des formateurs' : "/formers"};
+  var listItemText = { 'Gestion des étudiants' : "/learners", 'Gestion des formateurs' : "/formers", "Gestion des Packs" : "/packs"};
 
   var listItemTextUnderDivider = { 'Logout' : "/"};
 

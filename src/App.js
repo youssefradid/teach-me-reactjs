@@ -10,6 +10,7 @@ import AddPage from "./pages/AddPage";
 import Editepage from "./pages/Editepage";
 import Learners from "./pages/Learners";
 import Formers from "./pages/Formers";
+import Packs from "./pages/Packs";
 
 export default function App(){
     return(
@@ -25,6 +26,7 @@ export default function App(){
                 <Route path='/editepage' element={<Editepage/>}/>
                 <Route path='/learners' element={<Learners/>}/>
                 <Route path='/formers' element={<Formers/>}/>
+                <Route path='/packs' element={<Packs/>}/>
             </Routes>
             </BrowserRouter>
     );
