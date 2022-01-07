@@ -8,17 +8,12 @@ import Delete from '@mui/icons-material/Delete';
 import Create from '@mui/icons-material/Create';
 import {useNavigate, useLocation} from 'react-router';
 import AddIcon from '@mui/icons-material/Add';
-import AlertDialog from "../modal/modalAddFormer";
+import AlertDialog from "../modal/modalUpdateFormer";
+import AddModel from "../modal/modalAddFormer";
 
 function Line(props){
 
-    let history = useNavigate();
-
-    const gotoeditepage = function(element){
-
-      };
-    
-      const loadDeletePage = function(id){
+      const deleteFormer = function(id){
         FormerService.delete(id);
       };
 
@@ -34,7 +29,7 @@ function Line(props){
           <AlertDialog parentToChild={props.element}/>
         </TableCell>
         <TableCell>
-          <IconButton size="small" onClick={() => loadDeletePage(props.element.id)}>
+          <IconButton size="small" onClick={() => deleteFormer(props.element.id)}>
             <Delete fontSize="inherit" />
           </IconButton>
         </TableCell>        
@@ -43,7 +38,7 @@ function Line(props){
     );
   }
 
-export default function Learners() {
+export default function Formers() {
   
     let history = useNavigate();
 
@@ -60,15 +55,11 @@ export default function Learners() {
             )
 
     })
-
-
     return(
         <div>
+            
+                <AddModel  />
          
-
-         <Stack  direction="column" justifyContent="flex-start" alignItems="stretch" spacing={2}  >
-                <Button variant="contained" onClick={gotoadd} ><AddIcon/> Ajouter </Button>
-         </Stack>
          <Grid container rowSpacing={2} columnSpacing={2}>
             <Grid item xs={12}>
               <Table component={Paper} size={'small'}>

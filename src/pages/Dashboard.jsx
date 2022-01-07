@@ -8,9 +8,6 @@ import SaveIcon from '@mui/icons-material/Save';
 
 import {useNavigate} from 'react-router';
 
-import { getFirestore, doc, onSnapshot, collection, query, where, getDocs, getDoc } from "firebase/firestore";
-import db from '../firebase'
-
 import SessionService from "../services/service";
 import LearnerService from "../services/LearnerService";
 import ProgramService from "../services/ProgramService";
@@ -167,8 +164,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
     setOpen(false);
   };
 
-  var listItemText = { 'Gestion des étudiants' : "/learners", 'Gestion des formateurs' : "/formers", "Gestion des Packs" : "/packs"};
-
+  var listItemText = { 'Gestion des étudiants' : "/learners", 'Gestion des formateurs' : "/formers", "Gestion des packs" : "/packs"};
   var listItemTextUnderDivider = { 'Logout' : "/"};
 
   return (

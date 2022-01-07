@@ -5,7 +5,6 @@ import { getFirestore, doc, onSnapshot, query, where } from "firebase/firestore"
 const database = getFirestore();
 const db = collection(database, "Pack");
 
-
 class PackService {
 
   getAll = async () => {

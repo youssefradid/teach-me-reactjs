@@ -10,7 +10,7 @@ import {useNavigate, useLocation} from 'react-router';
 
 import AddIcon from '@mui/icons-material/Add';
 
-import AlertDialog from "../modal/modalAddLearner";
+import AlertDialog from "../modal/modalUpdateLearner";
 
 function Line(props){
 
