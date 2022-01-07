@@ -37,6 +37,7 @@ export default function AlertDialog({parentToChild})  {
     };
 
     FormerService.update(former,id);
+    handleClose();
 
   };
 

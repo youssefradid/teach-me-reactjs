@@ -10,14 +10,15 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import AddIcon from '@mui/icons-material/Add';
 
-export default function AlertDialog({parentToChild})  {
+export default function AddModel() {
   
   const [open, setOpen] = useState(false);
-  const [UserName, setUserName] = useState(parentToChild.firstname);
-  const [UserLastname, setUserLastname] = useState(parentToChild.lastname);
-  const [UserEmail, setUserEmail] = useState(parentToChild.email);
-  const [UserPhone, setUserPhone] = useState(parentToChild.phone);
+  const [UserName, setUserName] = useState("");
+  const [UserLastname, setUserLastname] = useState("");
+  const [UserEmail, setUserEmail] = useState("");
+  const [UserPhone, setUserPhone] = useState("");
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -27,7 +28,7 @@ export default function AlertDialog({parentToChild})  {
     setOpen(false);
   };
 
-  const updateLearner = (id) => {
+  const addLearner = () => {
     let learner = {
       "firstname" : UserName,
       "lastname" : UserLastname,
@@ -35,16 +36,20 @@ export default function AlertDialog({parentToChild})  {
       "phone" : UserPhone
     };
 
-    LearnerService.update(learner,id);
-    handleClose();
+  LearnerService.create(learner);
+
+  handleClose();
 
   };
 
   return (
     <div>
-      <Button variant="outlined" onClick={handleClickOpen}>
-        Modifier
-      </Button>
+      <Stack  direction="column" justifyContent="flex-start" alignItems="stretch" spacing={2}  >
+          <Button variant="contained" onClick={handleClickOpen}>
+            <AddIcon/> Add Learner
+          </Button>
+      </Stack>
+      
       <Dialog
         open={open}
         onClose={handleClose}
@@ -52,7 +57,7 @@ export default function AlertDialog({parentToChild})  {
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">
-          {"Update Learner"}
+          {"Add new Learner"}
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
@@ -67,16 +72,17 @@ export default function AlertDialog({parentToChild})  {
           <Paper sx={{p: 2, margin: 2, maxWidth: 500, flexGrow: 1}} elevation={6}>
           
             <Stack spacing={1}>    
-                <Typography color={blue[800]} variant='button'>Modifier un étudiant</Typography>
+                <Typography color={blue[800]} variant='button'>Ajouter un formateur</Typography>
                 <Typography color={grey[500]} variant='body1'>Vous devez remplir tous les champs obligatoires. </Typography>
-                <TextField  value={UserName} variant="outlined" helperText="Tappez ici Votre Nom" onChange={(e) => setUserName(e.target.value)}/>
-                <TextField  value={UserLastname} variant="outlined" helperText="Tappez ici Votre Prenom" onChange={(e) => setUserLastname(e.target.value)}/>
-                <TextField  value={UserEmail} variant="outlined" helperText="Tappez ici Votre Email" onChange={(e) => setUserEmail(e.target.value)}/>
-                <TextField  value={UserPhone} variant="outlined" helperText="Tappez ici Votre téléphone" onChange={(e) => setUserPhone(e.target.value)}/>
+                <TextField variant="outlined" helperText="Tappez ici Votre Nom" onChange={(e) => setUserName(e.target.value)}/>
+                <TextField variant="outlined" helperText="Tappez ici Votre Prenom" onChange={(e) => setUserLastname(e.target.value)}/>
+                <TextField variant="outlined" helperText="Tappez ici Votre Email" onChange={(e) => setUserEmail(e.target.value)}/>
+                <TextField variant="outlined" helperText="Tappez ici Votre phone" onChange={(e) => setUserPhone(e.target.value)}/>
+                <TextField variant="outlined" helperText="Tappez ici Votre lien vers le CV" />
             </Stack> 
            
          <Stack sx={{margin: 3}} spacing={2} direction={'row'} justifyContent="center">
-                <Button variant="contained"  onClick={() => updateLearner(parentToChild.id)}  ><SaveIcon/> Enregistrer</Button>
+                <Button variant="contained"  onClick={() => addLearner()}  ><SaveIcon/> Enregistrer</Button>
          </Stack>
           </Paper>
           </Grid>

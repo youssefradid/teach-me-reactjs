@@ -10,6 +10,8 @@ import {useNavigate, useLocation} from 'react-router';
 
 import AddIcon from '@mui/icons-material/Add';
 
+import AddLearner from "../modal/modalAddLearner";
+
 import AlertDialog from "../modal/modalUpdateLearner";
 
 function Line(props){
@@ -68,10 +70,8 @@ export default function Learners() {
     return(
         <div>
          
+         <AddLearner />
 
-         <Stack  direction="column" justifyContent="flex-start" alignItems="stretch" spacing={2}  >
-                <Button variant="contained" onClick={gotoadd} ><AddIcon/> Ajouter </Button>
-         </Stack>
          <Grid container rowSpacing={2} columnSpacing={2}>
             <Grid item xs={12}>
               <Table component={Paper} size={'small'}>
