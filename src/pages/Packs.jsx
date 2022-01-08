@@ -3,6 +3,7 @@ import React, { useState, useEffect }  from 'react';
 import {ListItemIcon,Box,IconButton, ListItemText,ListItem,Button,Stack, List, Container, Grid,  Drawer, Table, TableFooter, TableHead, TableBody, TableRow, TableCell, Paper, Typography, Card, CardHeader, Avatar,  CardContent, } from "@mui/material";
 import{blue, grey} from "@mui/material/colors";
 import PackService from "../services/PackService";
+import ProgramService from "../services/ProgramService";
 import SaveIcon from '@mui/icons-material/Save';
 import Delete from '@mui/icons-material/Delete';
 import Create from '@mui/icons-material/Create';
@@ -27,6 +28,7 @@ function Line(props){
       <TableRow>
         <TableCell>{props.element.label}</TableCell>
           <TableCell>{props.element.price}</TableCell>
+          <TableCell>{props.element.title}</TableCell>
           <TableCell>
           <AlertDialog parentToChild={props.element}/>
         </TableCell>
@@ -53,9 +55,25 @@ export default function Packs() {
 
       PackService.getAll().then(function(pack) {
 
-        setPacksData(
-                pack
-            )
+        pack.forEach(doc => {
+
+        ProgramService.getById(doc.programRef.id).then(function(program) {
+
+          program.forEach(prog => {
+
+            const newItem = [ Object.assign({}, prog, pack[0])];  
+
+              setPacksData(
+                newItem
+              )
+
+          })
+
+        })
+
+        })
+
+        
 
     })
 
@@ -72,6 +90,7 @@ export default function Packs() {
                   <TableRow>
                     <TableCell>Label</TableCell>
                     <TableCell>Price</TableCell>
+                    <TableCell>Programme</TableCell>
                     <TableCell>Modifier</TableCell>
                     <TableCell>Supprimer</TableCell>
                   </TableRow>
