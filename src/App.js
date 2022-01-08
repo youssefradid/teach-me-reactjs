@@ -11,6 +11,7 @@ import Editepage from "./pages/Editepage";
 import Learners from "./pages/Learners";
 import Formers from "./pages/Formers";
 import Packs from "./pages/Packs";
+import Programs from "./pages/Programs";
 
 export default function App(){
     return(
@@ -27,6 +28,7 @@ export default function App(){
                 <Route path='/learners' element={<Learners/>}/>
                 <Route path='/formers' element={<Formers/>}/>
                 <Route path='/packs' element={<Packs/>}/>
+                <Route path='/programs' element={<Programs/>}/>
             </Routes>
             </BrowserRouter>
     );
