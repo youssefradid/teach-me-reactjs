@@ -11,13 +11,6 @@ export default function AddPage() {
 
   let history = useNavigate();
 
-    const gotoregisterpage = function(){
-      let target = {
-        pathname: '/register-from',
-      };
-      history.push(target);
-    }
-
   const gotodashboard = function(){
     let target = {
       pathname: '/',
@@ -29,10 +22,10 @@ export default function AddPage() {
 
   ProgramService.getAll().then(function(session) {
 
-                    setSessionData
-                          (
-                            session
-                          )
+      setSessionData
+            (
+              session
+            )
 
   })
 
@@ -55,14 +48,12 @@ export default function AddPage() {
                 <TextField label="phone" variant="outlined" helperText="Tappez ici Votre téléphone"/>
                 <TextField label="Password" variant="filled" helperText="Tappez ici Votre Password"/>
                         <Select  label="session" >
-
                                    {
-                                        sessionData.map(function(item){
+                                      sessionData.map(function(item){
 
-                                          return(<MenuItem value={item.id}>{item.title}</MenuItem>);
+                                        return(<MenuItem value={item.id}>{item.title}</MenuItem>);
 
-                                        })
-                                      
+                                      })
                                     }
                                
                         </Select>

@@ -4,7 +4,7 @@ import { Button, Paper, Stack, TextField,Grid, Typography,RadioGroup, FormContro
 
 import{blue, grey} from "@mui/material/colors";
 import SaveIcon from '@mui/icons-material/Save';
-import PackService from "../services/PackService";
+import SessionService from "../services/service";
 import ProgramService from "../services/ProgramService";
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -19,8 +19,8 @@ import { getFirestore, doc } from "firebase/firestore";
 export default function AddModel() {
   
   const [open, setOpen] = useState(false);
-  const [Label, setLabel] = useState("");
-  const [Price, setPrice] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [startDate, setStartDate] = useState("");
   const [programData, setProgram] = useState([]);
   const [programId, setProgramId] = useState([]);
 
@@ -41,15 +41,15 @@ export default function AddModel() {
     setOpen(false);
   };
 
-  const addPack = () => {
+  const addSession = () => {
 
-    let pack = {
-      "label" : Label,
-      "price" : Price,
+    let session = {
+      "endDate" : endDate,
+      "startDate" : startDate,
       "programRef" : doc(getFirestore(), 'Program/' + programId)
     };
 
-  PackService.create(pack);
+  SessionService.create(session);
   handleClose();
   };
 
@@ -57,7 +57,7 @@ export default function AddModel() {
     <div>
       <Stack  direction="column" justifyContent="flex-start" alignItems="stretch" spacing={2}  >
           <Button variant="contained" onClick={handleClickOpen}>
-            <AddIcon/> Add pack
+            <AddIcon/> Add session
           </Button>
       </Stack>
       
@@ -68,7 +68,7 @@ export default function AddModel() {
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">
-          {"Add new Pack"}
+          {"Add new Session"}
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
@@ -85,8 +85,8 @@ export default function AddModel() {
             <Stack spacing={1}>    
                 <Typography color={blue[800]} variant='button'>Ajouter un formateur</Typography>
                 <Typography color={grey[500]} variant='body1'>Vous devez remplir tous les champs obligatoires. </Typography>
-                <TextField variant="outlined" helperText="Tappez ici Label" onChange={(e) => setLabel(e.target.value)}/>
-                <TextField variant="outlined" helperText="Tappez ici Price" onChange={(e) => setPrice(e.target.value)}/>
+                <TextField variant="outlined" helperText="Tappez ici end Date" onChange={(e) => setEndDate(e.target.value)}/>
+                <TextField variant="outlined" helperText="Tappez ici start Date" onChange={(e) => setStartDate(e.target.value)}/>
                 <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
@@ -103,7 +103,7 @@ export default function AddModel() {
             </Stack> 
            
          <Stack sx={{margin: 3}} spacing={2} direction={'row'} justifyContent="center">
-                <Button variant="contained"  onClick={() => addPack()}  ><SaveIcon/> Enregistrer</Button>
+                <Button variant="contained"  onClick={() => addSession()}  ><SaveIcon/> Enregistrer</Button>
          </Stack>
           </Paper>
           </Grid>
