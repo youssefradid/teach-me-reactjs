@@ -5,18 +5,24 @@ import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SaveIcon from '@mui/icons-material/Save';
-
-import {useNavigate} from 'react-router';
-
+import TableContainer from '@material-ui/core/TableContainer';
+import SouscriptionService from "../services/SouscriptionService";
 import SessionService from "../services/service";
 import LearnerService from "../services/LearnerService";
 import ProgramService from "../services/ProgramService";
 import PackService from "../services/PackService";
-import SouscriptionService from "../services/SouscriptionService";
 import Learner from "../entity/Learner";
 
+import {useNavigate} from 'react-router';
+import TablePagination from '@mui/material/TablePagination';
 
-import { styled, useTheme } from '@mui/material/styles';
+import { getFirestore, doc, onSnapshot, collection, query, where, getDocs, getDoc } from "firebase/firestore";
+import db from '../firebase'
+import TutorialDataService from "../services/service";
+
+import { styled, useTheme, makeStyles } from '@material-ui/core/styles';
+import { red, green } from '@mui/material/colors';
+
 
 
 import CssBaseline from '@mui/material/CssBaseline';
@@ -36,14 +42,39 @@ import IndeterminateCheckBoxIcon from '@mui/icons-material/IndeterminateCheckBox
 import Delete from '@mui/icons-material/Delete';
 import Create from '@mui/icons-material/Create';
 import AddCircle from '@mui/icons-material/AddCircle';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
 import AccessibilityTwoTone from '@mui/icons-material/AccessibilityTwoTone';
-import { CoPresentOutlined } from '@mui/icons-material';
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
+  },
+  title: {
+    flexGrow: 1,
+  },
+  container: {
+    marginTop: theme.spacing(2),
+  },
+  paper: {
+    padding: theme.spacing(2),
+    color: theme.palette.text.secondary,
+  },
+}));
+const Item = styled(Paper)(({ theme }) => ({
+  ...theme.typography.body2,
+  padding: theme.spacing(1),
+  textAlign: 'center',
+  color: theme.palette.text.secondary,
+}));
 
 function Line(props){
   
     let history = useNavigate();
-  
+    
+    
     const gotoeditepage = function(){
       history('/editepage');
     };
@@ -55,120 +86,153 @@ function Line(props){
     return(
       
       <TableRow>
+        <TableCell>{props.element.lastname}</TableCell>
         <TableCell>{props.element.firstname}</TableCell>
-          <TableCell>{props.element.lastname}</TableCell>
           <TableCell>{props.element.email}</TableCell>
           <TableCell>{props.element.phone}</TableCell>
           <TableCell>{props.element.title}</TableCell>
           <TableCell>{props.element.startDate}</TableCell>
           <TableCell>{props.element.endDate}</TableCell>
                           
+        <TableCell align="center">
+          <ButtonGroup color="primary" aria-label="outlined primary button group">
+            <IconButton size="small" onClick={() => gotoeditepage(props.element)}>
+              <Create fontSize="inherit" />
+            </IconButton>
+            <IconButton size="small" onClick={() => loadDeletePage(props.element)}>
+              <Delete fontSize="inherit" />
+            </IconButton>
+          </ButtonGroup>
+        </TableCell>
+
       </TableRow>
     );
   }
 
 export default function Dashboard() {
+    
+  const classes = useStyles();
 
-    let history = useNavigate();
-    const [customersData, setCustomersData] = useState([]);
+  let history = useNavigate();
+  const [customersData, setCustomersData] = useState([]);
 
 
-    SouscriptionService.getAll().then(function(souscription) {
+  SouscriptionService.getAll().then(function(souscription) {
 
-      souscription.forEach(doc => {
-            
-        Promise.all([LearnerService.getById(doc.learnerRef.id),SessionService.getById(doc.sessionRef.id)]).then(function(result){
-
-            const combined = result.reduce((acc, result) => { 
-                        return acc.concat(result)
-                    }, []);
-
-                    const newItem = [ Object.assign({}, combined[0], combined[1])];
-
-                        setCustomersData
-                          (
-                            newItem
-                          )
-            })
-  
-      })
-      })
+    souscription.forEach(doc => {
           
+      Promise.all([LearnerService.getById(doc.learnerRef.id),SessionService.getById(doc.sessionRef.id)]).then(function(result){
 
-        const gotoadd = function(){
-          history('/addpage');
-        };
+          const combined = result.reduce((acc, result) => { 
+                      return acc.concat(result)
+                  }, []);
+
+                  const newItem = [ Object.assign({}, combined[0], combined[1])];
+
+                      setCustomersData
+                        (
+                          newItem
+                        )
+          })
+
+    })
+    })
         
-        const logout = function() {
-          window.location.href = '/';
+
+      const gotoadd = function(){
+        history('/addpage');
       };
+      
+      const logout = function() {
+        window.location.href = '/';
+    };
+    const gotoeditepage = function(){
+      history('/editepage');
+    };
+  
+    const loadDeletePage = function(){
+      history('/delete-program-page');
+    };
 
 const drawerWidth = 300;
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
-  ({ theme, open }) => ({
-    flexGrow: 1,
-    padding: theme.spacing(3),
-    transition: theme.transitions.create('margin', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    marginLeft: `-${drawerWidth}px`,
-    ...(open && {
-      transition: theme.transitions.create('margin', {
-        easing: theme.transitions.easing.easeOut,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-      marginLeft: 0,
-    }),
-  }),
-);
-
-const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== 'open',
-})(({ theme, open }) => ({
-  transition: theme.transitions.create(['margin', 'width'], {
+({ theme, open }) => ({
+  flexGrow: 1,
+  padding: theme.spacing(3),
+  transition: theme.transitions.create('margin', {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
+  marginLeft: `-${drawerWidth}px`,
   ...(open && {
-    width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: `${drawerWidth}px`,
-    transition: theme.transitions.create(['margin', 'width'], {
+    transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
     }),
+    marginLeft: 0,
   }),
+}),
+);
+
+const AppBar = styled(MuiAppBar, {
+shouldForwardProp: (prop) => prop !== 'open',
+})(({ theme, open }) => ({
+transition: theme.transitions.create(['margin', 'width'], {
+  easing: theme.transitions.easing.sharp,
+  duration: theme.transitions.duration.leavingScreen,
+}),
+...(open && {
+  width: `calc(100% - ${drawerWidth}px)`,
+  marginLeft: `${drawerWidth}px`,
+  transition: theme.transitions.create(['margin', 'width'], {
+    easing: theme.transitions.easing.easeOut,
+    duration: theme.transitions.duration.enteringScreen,
+  }),
+}),
 }));
 
 const DrawerHeader = styled('div')(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
-  ...theme.mixins.toolbar,
-  justifyContent: 'flex-end',
+display: 'flex',
+alignItems: 'center',
+padding: theme.spacing(0, 1),
+// necessary for content to be below app bar
+...theme.mixins.toolbar,
+justifyContent: 'flex-end',
 }));
 
 
-    
+  
 
-  const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
+const theme = useTheme();
+const [open, setOpen] = React.useState(false);
 
-  const handleDrawerOpen = () => {
-    setOpen(true);
+const handleDrawerOpen = () => {
+  setOpen(true);
+};
+
+const handleDrawerClose = () => {
+  setOpen(false);
+};
+
+var listItemText = { 'Gestion des étudiants' : "/learners", 'Gestion des formateurs' : "/formers", "Gestion des Packs" : "/packs"};
+
+var listItemTextUnderDivider = { 'Logout' : "/"};
+
+const [page, setPage] = React.useState(2);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
   };
 
-  const handleDrawerClose = () => {
-    setOpen(false);
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
   };
 
-  var listItemText = { 'Gestion des étudiants' : "/learners", 'Gestion des formateurs' : "/formers", "Gestion des packs" : "/packs"};
-  var listItemTextUnderDivider = { 'Logout' : "/"};
 
   return (
-    
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
       <AppBar position="fixed" open={open}>
@@ -207,23 +271,23 @@ const DrawerHeader = styled('div')(({ theme }) => ({
         </DrawerHeader>
         <Divider />
         <List>
-          {Object.keys(listItemText).map((key, index) => (
-            <ListItem button onClick={() => history(listItemText[key])}>
+          {['Gestion des programmes', 'Gestion des sessions', 'Gestion des Formateurs'].map((text, index) => (
+            <ListItem button key={text}>
               <ListItemIcon>
                 {index % 2 === 0 ? <AccessibilityTwoTone /> : <AccessibilityTwoTone />}
               </ListItemIcon>
-              <ListItemText primary={key} />
+              <ListItemText primary={text} />
             </ListItem>
           ))}
         </List>
         <Divider />
         <List>
-          {Object.keys(listItemTextUnderDivider).map((key, index) => (
-            <ListItem button  onClick={() => history(listItemTextUnderDivider[key])}>  {/* onClick={() => history('/learners')}*/}
+          {[ 'Logout'].map((text, index) => (
+            <ListItem button key={text}>
               <ListItemIcon>
                 {index % 2 === 0 ? <LogoutIcon /> : <LogoutIcon />}
               </ListItemIcon>
-              <ListItemText primary={key} />
+              <ListItemText primary={text} />
             </ListItem>
           ))}
         </List>
@@ -232,63 +296,95 @@ const DrawerHeader = styled('div')(({ theme }) => ({
         <DrawerHeader />
       
 
-  
-    <Container>
-    
-      <Grid container rowSpacing={2} columnSpacing={2}>
-        <Grid item md={2}>
-          <Drawer open={true} variant='permanent'>
-            
-          </Drawer>
-        </Grid>
+    <Container className={classes.container} maxWidth="lg">
+      <Paper className={classes.paper}>
+        <Box display="flex">
+          <Box flexGrow={1}>
+            <Typography component="h2" variant="h6" color="primary" gutterBottom>
+              Apprenants
+              </Typography>
+            </Box>
+            <Box>
+              <Button variant="contained" onClick={gotoadd} color="primary"><AddIcon/>
+                Ajouter
+              </Button>
+            </Box>
+          </Box>
 
-        <Grid item md={10}>
+          <TableContainer component={Paper}>
+          <Table className={classes.table} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell align="center">Nom</TableCell>
+                <TableCell align="center">Prénom</TableCell>
+                <TableCell align="center">Email</TableCell>
+                <TableCell align="center">Téléphone</TableCell>
+                <TableCell align="center">Programme</TableCell>
+                <TableCell align="center">Date de début de Session</TableCell>
+                <TableCell align="center">Date de fin de Session</TableCell>
+                <TableCell align="center">Actions</TableCell>
 
-        <Stack  direction="column" justifyContent="flex-start" alignItems="stretch" spacing={2}  >
-                <Button variant="contained" onClick={gotoadd} ><AddIcon/> Ajouter </Button>
-         </Stack>
+              </TableRow>
+            </TableHead>
+           <TableBody>
+           {
+                  customersData.map((user) => (
+                            <TableRow key={user.ID}>
+                            <TableCell align="center">{user.lastname}</TableCell>
+                            <TableCell align="center">{user.firstname}</TableCell>
+                            <TableCell align="center">{user.email}</TableCell>
+                            <TableCell align="center">{user.phone}</TableCell>
+                            <TableCell align="center">{user.title}</TableCell>
+                            <TableCell align="center">{user.startDate}</TableCell>
+                            <TableCell align="center">{user.endDate}</TableCell>
+                            <TableCell align="center">
+          <ButtonGroup aria-label="outlined primary button group">
+            <IconButton color="success" size="small" onClick={() => gotoeditepage(user)}>
+              <Create fontSize="inherit" />
+            </IconButton>
+            <IconButton color="error" size="small" onClick={() => loadDeletePage(user)}>
+              <Delete fontSize="inherit" />
+            </IconButton>
+          </ButtonGroup>
+        </TableCell>
 
-          <Grid container rowSpacing={2} columnSpacing={2}>
-            <Grid item xs={12}>
-              <Table component={Paper} size={'small'}>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Nom</TableCell>
-                    <TableCell>Prénom</TableCell>
-                    <TableCell>Email</TableCell>
-                    <TableCell>Téléphone</TableCell>
-                    <TableCell>Programme</TableCell>
-                    <TableCell>Session start date</TableCell>
-                    <TableCell>Session end date</TableCell>
-                  </TableRow>
-                </TableHead>
+                          </TableRow>
+          
+        
+                          ))
+                        }
 
-                <TableBody>
-                {
-                    customersData.map(function(item){
-                      return(<Line element={item}/>);
-
-                    })
-                  
-                }
               </TableBody>
                 <TableFooter>
-                  <Typography variant='body2'>Nombre d'inscrits : {customersData.length}</Typography>
+                  <Grid container spacing={2} columns={16}>
+                    <Grid item xs={100}>
+                      <Item>
+                        <Typography variant='body2' align="center">Nombre d'inscrits : {customersData.length}</Typography>
+                      </Item>
+                    </Grid>
+                    <Grid item xs={100}>
+                      <Item>
+
+                      <TablePagination
+                        component="div"
+                        count={100}
+                        page={page}
+                        onPageChange={handleChangePage}
+                        rowsPerPage={rowsPerPage}
+                        onRowsPerPageChange={handleChangeRowsPerPage}
+                      />
+                    </Item>
+                  </Grid>
+                  </Grid>
                 </TableFooter>
+
               </Table>
-            </Grid>
-          </Grid>
-        </Grid>
-      </Grid>
-    </Container>
-              
+              </TableContainer>
 
-
+              </Paper>
+      </Container>
+    
       </Main>
-    </Box>
+      </Box>
   );
 }
-
-
-
-              
