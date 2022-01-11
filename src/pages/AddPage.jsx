@@ -49,13 +49,6 @@ export default function AddPage() {
 
   let history = useNavigate();
 
-    const gotoregisterpage = function(){
-      let target = {
-        pathname: '/register-from',
-      };
-      history.push(target);
-    }
-
   const gotodashboard = function(){
     let target = {
       pathname: '/',
@@ -67,10 +60,10 @@ export default function AddPage() {
 
   ProgramService.getAll().then(function(session) {
 
-                    setSessionData
-                          (
-                            session
-                          )
+      setSessionData
+            (
+              session
+            )
 
   })
   const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
@@ -130,6 +123,7 @@ export default function AddPage() {
 
 
     return(
+
       <Box sx={{ display: 'flex' }}>
       <CssBaseline />
       <AppBar position="fixed" open={open}>
@@ -275,7 +269,8 @@ export default function AddPage() {
                 }         
               </Select>
             </FormControl>
-          </Grid>
+
+        </Grid>
           <Button
             type="submit"
             fullWidth
@@ -286,6 +281,7 @@ export default function AddPage() {
             Create
           </Button>
 
+        
         </form>
       </div>
     </Container>

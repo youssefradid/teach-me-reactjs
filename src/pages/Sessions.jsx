@@ -2,7 +2,7 @@ import React, { useState, useEffect }  from 'react';
 
 import {ListItemIcon,Box,IconButton, ListItemText,ListItem,Button,Stack, List, Container, Grid,  Drawer, Table, TableFooter, TableHead, TableBody, TableRow, TableCell, Paper, Typography, Card, CardHeader, Avatar,  CardContent, } from "@mui/material";
 import{blue, grey} from "@mui/material/colors";
-import PackService from "../services/PackService";
+import SessionService from "../services/service";
 import ProgramService from "../services/ProgramService";
 import SaveIcon from '@mui/icons-material/Save';
 import Delete from '@mui/icons-material/Delete';
@@ -11,21 +11,21 @@ import {useNavigate, useLocation} from 'react-router';
 
 import AddIcon from '@mui/icons-material/Add';
 
-import AlertDialog from "../modal/modalUpdatePack";
-import AddPackModal from "../modal/modalAddPack";
+import AlertDialog from "../modal/modalUpdateSession";
+import AddPackModal from "../modal/modalAddSession";
 
 function Line(props){
 
       const loadDeletePage = function(id){
-        PackService.delete(id);
+        SessionService.delete(id);
       };
 
 
     return(
     
       <TableRow>
-        <TableCell>{props.element.label}</TableCell>
-          <TableCell>{props.element.price}</TableCell>
+        <TableCell>{props.element.endDate}</TableCell>
+          <TableCell>{props.element.startDate}</TableCell>
           <TableCell>{props.element.title}</TableCell>
           <TableCell>
           <AlertDialog parentToChild={props.element}/>
@@ -40,17 +40,17 @@ function Line(props){
     );
   }
 
-export default function Packs() {
+export default function Sessions() {
   
     const dataToShow = [];
   
-      const [packsData, setPacksData] = useState([]);
+      const [sessionsData, setSessionsData] = useState([]);
 
       useEffect(() => {
 
-      PackService.getAll().then(function(pack) {
+      SessionService.getAll().then(function(session) {
         
-        pack.forEach(doc => {
+        session.forEach(doc => {
 
         if(doc.programRef){
 
@@ -64,7 +64,7 @@ export default function Packs() {
                 return acc.concat(result)
                 }, []);
           
-              setPacksData(
+              setSessionsData(
                 combined
               )
                
@@ -90,8 +90,8 @@ export default function Packs() {
               <Table component={Paper} size={'small'}>
                 <TableHead>
                   <TableRow>
-                    <TableCell>Label</TableCell>
-                    <TableCell>Price</TableCell>
+                    <TableCell>End date</TableCell>
+                    <TableCell>start date</TableCell>
                     <TableCell>Programme</TableCell>
                     <TableCell>Modifier</TableCell>
                     <TableCell>Supprimer</TableCell>
@@ -100,7 +100,7 @@ export default function Packs() {
 
                 <TableBody>
                     {
-                        packsData.map(function(item){
+                        sessionsData.map(function(item){
                                 return(<Line element={item}/>);
                         })
                 }
