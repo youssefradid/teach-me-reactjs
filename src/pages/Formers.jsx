@@ -250,7 +250,12 @@ export default function Formers() {
                           <Typography variant='body2' align="center">Nombre d'inscrits : {formersData.length}</Typography>
                         </Item>
                       </Grid>
-                      <Grid item xs={100}>
+                    </Grid>
+                  </TableFooter>
+  
+                </Table>
+                </TableContainer>
+                <Grid item xs={100}>
                         <Item>
   
                         <TablePagination
@@ -263,12 +268,6 @@ export default function Formers() {
                         />
                       </Item>
                     </Grid>
-                    </Grid>
-                  </TableFooter>
-  
-                </Table>
-                </TableContainer>
-  
                 </Paper>
         </Container>
       
