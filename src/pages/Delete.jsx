@@ -3,11 +3,11 @@ import React from 'react';
 import { Button, Paper, Stack, TextField,Grid, Typography,RadioGroup, FormControlLabel, FormLabel,Checkbox,FormGroup, Select, MenuItem } from "@mui/material";
 
 import{blue, grey} from "@mui/material/colors";
-import { useHistory } from "react-router";
+import {useNavigate} from 'react-router';
 import SaveIcon from '@mui/icons-material/Save';
-export default function AddPage() {
+export default function Delete() {
 
-  let history = useHistory();
+  let history = useNavigate();
 
     const gotoregisterpage = function(){
       let target = {

@@ -13,6 +13,8 @@ import Formers from "./pages/Formers";
 import Packs from "./pages/Packs";
 import Programs from "./pages/Programs";
 import Sessions from "./pages/Sessions";
+import Delete from "./pages/Delete";
+
 
 export default function App(){
     return(
@@ -21,6 +23,7 @@ export default function App(){
                 <Route path='/register-from' element={<RegisterForm/>}/>
                 <Route path='/' element={<LoginForm/>}/>
                 <Route path='/password-recovery-from' element={<PasswordRecoveryForm/>}/>
+                <Route path='/delete-program-page' element={<Delete/>}/>
                 <Route path='/landing-Page' element={<LandingPage/>}/>
                 <Route path='/subcription-Page' element={<SubscriptionPage/>}/>
                 <Route path='/dashboard' element={<Dashboard/>}/>
