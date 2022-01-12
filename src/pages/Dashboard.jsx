@@ -271,23 +271,23 @@ const [page, setPage] = React.useState(2);
         </DrawerHeader>
         <Divider />
         <List>
-          {['Gestion des programmes', 'Gestion des sessions', 'Gestion des Formateurs'].map((text, index) => (
-            <ListItem button key={text}>
+        {Object.keys(listItemText).map((key, index) => (
+            <ListItem button onClick={() => history(listItemText[key])}>
               <ListItemIcon>
                 {index % 2 === 0 ? <AccessibilityTwoTone /> : <AccessibilityTwoTone />}
               </ListItemIcon>
-              <ListItemText primary={text} />
+              <ListItemText primary={key} />
             </ListItem>
           ))}
         </List>
         <Divider />
         <List>
-          {[ 'Logout'].map((text, index) => (
-            <ListItem button key={text}>
+        {Object.keys(listItemTextUnderDivider).map((key, index) => (
+            <ListItem button  onClick={() => history(listItemTextUnderDivider[key])}>
               <ListItemIcon>
                 {index % 2 === 0 ? <LogoutIcon /> : <LogoutIcon />}
               </ListItemIcon>
-              <ListItemText primary={text} />
+              <ListItemText primary={key} />
             </ListItem>
           ))}
         </List>
@@ -369,7 +369,6 @@ const [page, setPage] = React.useState(2);
               </TableContainer>
               <Grid item xs={100}>
                       <Item>
-
                       <TablePagination
                         component="div"
                         count={100}
