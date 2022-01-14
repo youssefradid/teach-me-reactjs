@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Button, Avatar, Stack, CardActions, CardMedia,CardHeader,Card, Typography, CardContent, Container } from "@mui/material";
 
-import{grey, orange, red} from "@mui/material/colors";
+import{grey, red} from "@mui/material/colors";
 import { useNavigate } from "react-router";
 
 export default function LandingPage() {

@@ -1,9 +1,8 @@
-import React, { useState, useEffect }  from 'react';
-import { Button, Paper, Stack, TextField, FormControl, InputLabel, Typography,RadioGroup,Grid, FormControlLabel,Box, FormLabel,Checkbox,FormGroup, Select, MenuItem } from "@mui/material";
+import React, { useState }  from 'react';
+import { Button, Paper, Stack, TextField, FormControl, InputLabel, Typography,Grid,Checkbox,FormGroup, Select, MenuItem } from "@mui/material";
 import Header from '../header/header';
-import{blue, grey} from "@mui/material/colors";
+import{blue} from "@mui/material/colors";
 import { useNavigate } from "react-router";
-import { getFirestore, doc, onSnapshot, collection, query, where } from "firebase/firestore";
 import LearnerService from "../services/LearnerService";
 import FormerService from "../services/FormerService";
 
