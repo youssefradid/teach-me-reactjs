@@ -150,33 +150,7 @@ export default function AddModel() {
 
           </DialogContentText>
         </DialogContent>
-        <Grid
-                container 
-                justifyContent="center"
-                alignItems="flex-end"
-            >
-          <Paper sx={{p: 2, margin: 2, maxWidth: 500, flexGrow: 1}} elevation={6}>
-          
-            <Stack spacing={1}>    
-                <Typography color={blue[800]} variant='button'>Ajouter un formateur</Typography>
-                <Typography color={grey[500]} variant='body1'>Vous devez remplir tous les champs obligatoires. </Typography>
-                <TextField variant="outlined" helperText="Tappez ici Votre Nom" onChange={(e) => setUserName(e.target.value)}/>
-                <TextField variant="outlined" helperText="Tappez ici Votre Prenom" onChange={(e) => setUserLastname(e.target.value)}/>
-                <TextField variant="outlined" helperText="Tappez ici Votre Email" onChange={(e) => setUserEmail(e.target.value)}/>
-                <TextField variant="outlined" helperText="Tappez ici Votre phone" onChange={(e) => setUserPhone(e.target.value)}/>
-                <TextField variant="outlined" helperText="Tappez ici Votre lien vers le CV" />
-            </Stack> 
-           
-         <Stack sx={{margin: 3}} spacing={2} direction={'row'} justifyContent="center">
-                <Button variant="contained"  onClick={() => addLearner()}  ><SaveIcon/> Enregistrer</Button>
-         </Stack>
-          </Paper>
-          </Grid>
-
-
-          <Container maxWidth="xs">
-
-
+ <Container maxWidth="xs">
 <div className={classes.paper}>
   <Typography component="h1" variant="h5">
     Apprenants
@@ -253,7 +227,6 @@ export default function AddModel() {
             fullWidth
             variant="contained"
             color="primary"
-            className={classes.submit}
             onClick={() => addLearner()}
           >
             Create
@@ -262,7 +235,7 @@ export default function AddModel() {
         </form>
       </div>
     </Container>
-
+    <br/>
 
       </Dialog>
     </div>

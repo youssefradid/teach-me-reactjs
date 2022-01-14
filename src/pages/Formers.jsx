@@ -257,7 +257,6 @@ export default function Formers() {
                 </TableContainer>
                 <Grid item xs={100}>
                         <Item>
-  
                         <TablePagination
                           component="div"
                           count={100}

@@ -1,9 +1,8 @@
-import React, { useState, useEffect }  from 'react';
+import React, { useState }  from 'react';
 import { Button, Paper, Stack, TextField, FormControl, InputLabel, Typography,RadioGroup,Grid, FormControlLabel,Box, FormLabel,Checkbox,FormGroup, Select, MenuItem } from "@mui/material";
 import Header from '../header/header';
-import{blue, grey} from "@mui/material/colors";
+import{ blue } from "@mui/material/colors";
 import { useNavigate } from "react-router";
-import { getFirestore, doc, onSnapshot, collection, query, where } from "firebase/firestore";
 import LearnerService from "../services/LearnerService";
 import FormerService from "../services/FormerService";
 
@@ -18,8 +17,6 @@ export default function RegisterForm() {
     const allLearners = LearnerService.getAll();
     const allFormers = FormerService.getAll();
     
-
-
     const submit = (e) => {
       
         if(UserIdentity == "etud"){
@@ -29,6 +26,7 @@ export default function RegisterForm() {
             result.forEach(function(learner){
 
                   if(learner.email == UserEmail && learner.password == UserPassword){
+                    window.sessionStorage.setItem("learner", learner.id);
                     gotoDash();
                   }
       
@@ -43,6 +41,7 @@ export default function RegisterForm() {
             result.forEach(function(former){
 
               if(former.email == UserEmail && former.password == UserPassword){
+                window.sessionStorage.setItem("former", former.id);
                 gotoDash();
                   }
       
@@ -51,8 +50,6 @@ export default function RegisterForm() {
           
         }
 
-
-           
   }
 
   const gotoDash = function(){
@@ -78,8 +75,6 @@ export default function RegisterForm() {
               <Stack spacing={1} > 
                                       
                   <Typography color={blue[800]} variant='button'>Login Page</Typography>
-
-
 
                   <TextField label="Email" variant="outlined" helperText="Tappez ici Votre Email" onChange={(e) => setUserEmail(e.target.value)} required /> 
                   <TextField type="password" label="Password" variant="outlined" helperText="Tappez ici Votre mot de passe" onChange={(e) => setUserPassword(e.target.value)} required/>

@@ -47,7 +47,7 @@ export default function AddModel() {
     <div>
       <Stack  direction="column" justifyContent="flex-start" alignItems="stretch" spacing={2}  >
           <Button variant="contained" onClick={handleClickOpen}>
-            <AddIcon/> Add Former
+            <AddIcon/> Ajouter un formateur
           </Button>
          </Stack>
       

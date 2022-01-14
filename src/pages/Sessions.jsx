@@ -1,16 +1,9 @@
 import React, { useState, useEffect }  from 'react';
 
 import {ListItemIcon,Box,IconButton, ListItemText,ListItem,Button,Stack, List, Container, Grid,  Drawer, Table, TableFooter, TableHead, TableBody, TableRow, TableCell, Paper, Typography, Card, CardHeader, Avatar,  CardContent, } from "@mui/material";
-import{blue, grey} from "@mui/material/colors";
 import SessionService from "../services/service";
 import ProgramService from "../services/ProgramService";
-import SaveIcon from '@mui/icons-material/Save';
 import Delete from '@mui/icons-material/Delete';
-import Create from '@mui/icons-material/Create';
-import {useNavigate, useLocation} from 'react-router';
-
-import AddIcon from '@mui/icons-material/Add';
-
 import AlertDialog from "../modal/modalUpdateSession";
 import AddPackModal from "../modal/modalAddSession";
 
@@ -43,8 +36,7 @@ function Line(props){
 export default function Sessions() {
   
     const dataToShow = [];
-  
-      const [sessionsData, setSessionsData] = useState([]);
+    const [sessionsData, setSessionsData] = useState([]);
 
       useEffect(() => {
 
@@ -58,27 +50,21 @@ export default function Sessions() {
 
               program.forEach(prog => {
                 
-               dataToShow.push( [ Object.assign({}, prog, doc)] );
-               
-               const combined = dataToShow.reduce((acc, result) => { 
-                return acc.concat(result)
-                }, []);
-          
-              setSessionsData(
-                combined
-              )
-               
+                setSessionsData(
+                  session
+                )
+
               })
               
           })
         }
-
+        
     })
-
+  
   })
 
-  }, []); 
- 
+  }, [sessionsData]); 
+  
 
     return(
         <div>
