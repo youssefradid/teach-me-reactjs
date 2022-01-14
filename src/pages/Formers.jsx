@@ -1,33 +1,18 @@
-import React, { useState, useEffect }  from 'react';
+import React, { useState }  from 'react';
 
-import {ListItemIcon,Box,IconButton, ListItemText,ListItem,Button,Stack, List, Container, Grid,  Drawer, Table, TableFooter, TableHead, TableBody, TableRow, TableCell, Paper, Typography, Card, CardHeader, Avatar,  CardContent, } from "@mui/material";
-import{blue, grey} from "@mui/material/colors";
+import {Box,IconButton, Container, Grid, Table, TableFooter, TableHead, TableBody, TableRow, TableCell, Paper, Typography } from "@mui/material";
 import FormerService from "../services/FormerService";
-import SaveIcon from '@mui/icons-material/Save';
-import Create from '@mui/icons-material/Create';
-import {useNavigate, useLocation} from 'react-router';
-import AddIcon from '@mui/icons-material/Add';
+import {useNavigate} from 'react-router';
 import AlertDialog from "../modal/modalUpdateFormer";
 import AddModel from "../modal/modalAddFormer";
 import TableContainer from '@material-ui/core/TableContainer';
-import SouscriptionService from "../services/SouscriptionService";
-import SessionService from "../services/service";
-import LearnerService from "../services/LearnerService";
+
 import TablePagination from '@mui/material/TablePagination';
 import { styled, useTheme, makeStyles } from '@material-ui/core/styles';
-import CssBaseline from '@mui/material/CssBaseline';
 import MuiAppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
 
-import Divider from '@mui/material/Divider';
-
-import MenuIcon from '@mui/icons-material/Menu';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import LogoutIcon from '@mui/icons-material/Logout';
 import Delete from '@mui/icons-material/Delete';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
-import AccessibilityTwoTone from '@mui/icons-material/AccessibilityTwoTone';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -56,43 +41,6 @@ const Item = styled(Paper)(({ theme }) => ({
   textAlign: 'center',
   color: theme.palette.text.secondary,
 }));
-
-
-function Line(props){
-  let history = useNavigate();
-
-  const gotoeditepage = function(){
-    history('/editepage');
-  };
-
-  const loadDeletePage = function(){
-    history('/delete-program-page');
-  };
-
-      const deleteFormer = function(id){
-        FormerService.delete(id);
-      };
-      
-
-    return(
-    
-      <TableRow>
-        <TableCell>{props.element.firstname}</TableCell>
-          <TableCell>{props.element.lastname}</TableCell>
-          <TableCell>{props.element.email}</TableCell>
-          <TableCell>{props.element.specialisation}</TableCell>
-          <TableCell>
-          <AlertDialog parentToChild={props.element}/>
-        </TableCell>
-        <TableCell>
-          <IconButton size="small" onClick={() => deleteFormer(props.element.id)}>
-            <Delete fontSize="inherit" />
-          </IconButton>
-        </TableCell>        
-      </TableRow>
-      
-    );
-  }
 
 export default function Formers() {
   
