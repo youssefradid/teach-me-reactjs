@@ -180,7 +180,7 @@ const handleDrawerClose = () => {
   setOpen(false);
 };
 
-var listItemText = { 'Gestion des étudiants' : "/learners", 'Gestion des formateurs' : "/formers", "Gestion des Packs" : "/packs", "Les souscriptions" : "/subcription-Page"};
+var listItemText = { 'Gestion des apprenants' : "/learners", 'Gestion des formateurs' : "/formers", 'Gestion des programmes' : "/programs", 'Gestion des sessions' : "/sessions", "Gestion des packs" : "/packs", "Les souscriptions" : "/subcription-Page"};
 
 var listItemTextUnderDivider = { 'Logout' : "/"};
 

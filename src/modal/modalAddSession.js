@@ -100,8 +100,6 @@ export default function AddModel() {
                 value={cal2}
                   />
 
-
-
                 <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"

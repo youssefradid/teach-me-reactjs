@@ -21,8 +21,6 @@ export default function SubscriptionPage() {
   const [checkedValue, setChecked] = useState([]);
   const [sessionId, setSessionId] = useState([]);
 
-  let history = useNavigate();
-
 const nextStep = function(event){ 
 
    setCurrentStep(currentStep +1); 
