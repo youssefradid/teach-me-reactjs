@@ -1,6 +1,6 @@
 import React, { useState }  from 'react';
 
-import {ListItemIcon,Box,IconButton, ListItemText,ListItem,Button, List, Container, Grid,  Drawer, Table, TableFooter, TableHead, TableBody, TableRow, TableCell, Paper, Typography } from "@mui/material";
+import { ListItemIcon, Box, IconButton, ListItemText, ListItem, Button, List, Container, Grid,  Drawer, Table, TableFooter, TableHead, TableBody, TableRow, TableCell, Paper, Typography } from "@mui/material";
 
 import TableContainer from '@material-ui/core/TableContainer';
 import SouscriptionService from "../services/SouscriptionService";
@@ -107,7 +107,6 @@ export default function Dashboard() {
     const learnerID = window.sessionStorage.getItem("learner");
 
     if(learnerID){
-
       LearnerService.getById(learnerID).then(function(learner){
 
         setLearnerName(
@@ -118,9 +117,6 @@ export default function Dashboard() {
       
     }
     
-
-    
-
 const drawerWidth = 300;
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(

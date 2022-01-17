@@ -47,8 +47,8 @@ getById = async (id) => {
 }
 
     
-  create = async (tutorial) => {
-    return  await addDoc(db, tutorial);
+  create = async (learner) => {
+    return  await addDoc(db, learner);
   }
 
   update = async (tutorial,id) => {
