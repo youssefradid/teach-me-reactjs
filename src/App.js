@@ -26,13 +26,12 @@ export default function App(){
                 <Route path='/landing-Page' element={<LandingPage/>}/>
                 <Route path='/subcription-Page' element={<SubscriptionPage/>}/>
 
-                <Route path='/dashboard' element={<Dashboard/>}>
+                <Route path='/dashboard' element={<Dashboard/>}/>
                 <Route path='/learners' element={<Learners/>}/>
                 <Route path='/formers' element={<Formers/>}/>
                 <Route path='/packs' element={<Packs/>}/>
                 <Route path='/programs' element={<Programs/>}/>
                 <Route path='/sessions' element={<Sessions/>}/>
-                </Route>
 
               
                 <Route path="*" element={<Editepage />} />
