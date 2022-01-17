@@ -50,8 +50,8 @@ class SessionService {
   update = async (tutorial,id) => {
     const washingtonRef = doc(database, "Session", id);
     return await updateDoc(washingtonRef, {
-        firstname: tutorial.firstname,
-        lastname: tutorial.lastname
+        endDate: tutorial.endDate,
+        startDate: tutorial.startDate
       });
   }
 

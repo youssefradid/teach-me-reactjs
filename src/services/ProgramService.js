@@ -29,7 +29,7 @@ class ProgramService {
     let dataToShow = [];
     const docRef = doc(db, id.trim());
     const docSnap = await getDoc(docRef);
-  
+  if(docSnap.data()){
       const { description, title, goal } = docSnap.data();
       dataToShow = [
         {
@@ -39,6 +39,7 @@ class ProgramService {
           "goal": goal,
         }
       ];
+  }
     return dataToShow;
   }
 
@@ -50,8 +51,9 @@ class ProgramService {
   update = async (tutorial,id) => {
     const washingtonRef = doc(database, "Program", id);
     return await updateDoc(washingtonRef, {
-        firstname: tutorial.firstname,
-        lastname: tutorial.lastname
+        title: tutorial.title,
+        description: tutorial.description,
+        goal: tutorial.goal
       });
   }
 

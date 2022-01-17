@@ -5,7 +5,6 @@ import { getFirestore, doc, onSnapshot, query, where } from "firebase/firestore"
 const database = getFirestore();
 const db = collection(database, "Pack");
 
-
 class PackService {
 
   getAll = async () => {
@@ -24,6 +23,25 @@ class PackService {
     });
     return dataToShow;
   }
+
+  getById = async (id) => {
+    let dataToShow = [];
+    const docRef = doc(db, id.trim());
+    const docSnap = await getDoc(docRef);
+  
+      const { label, price, programRef } = docSnap.data();
+      dataToShow = [
+        {
+              "id" : docSnap.id,
+              "label": label,
+              "price": price,
+              "programRef": programRef,
+        }
+      ];
+    return dataToShow;
+  }
+
+  
   
   create = async (tutorial) => {
     return  await addDoc(db, tutorial);

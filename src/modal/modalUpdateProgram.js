@@ -4,22 +4,20 @@ import { Button, Paper, Stack, TextField,Grid, Typography,RadioGroup, FormContro
 
 import{blue, grey} from "@mui/material/colors";
 import SaveIcon from '@mui/icons-material/Save';
-import FormerService from "../services/FormerService";
+import ProgramService from "../services/ProgramService";
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import AddIcon from '@mui/icons-material/Add';
 
-export default function AddModel() {
+export default function AlertDialog({parentToChild})  {
   
   const [open, setOpen] = useState(false);
-  const [UserName, setUserName] = useState("");
-  const [UserLastname, setUserLastname] = useState("");
-  const [UserEmail, setUserEmail] = useState("");
-  const [Userspecialisation, setUserspecialisation] = useState("");
-  //const [UsersCV, setUsersCV] = useState(parentToChild.cvLink);
+  const [Title, setTitle] = useState(parentToChild.title);
+  const [Description, setDescription] = useState(parentToChild.description);
+  const [Goal, setGoal] = useState(parentToChild.goal);
+
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -29,28 +27,23 @@ export default function AddModel() {
     setOpen(false);
   };
 
-  const addFormer = () => {
-    let former = {
-      "firstname" : UserName,
-      "lastname" : UserLastname,
-      "email" : UserEmail,
-      "specialisation" : Userspecialisation
+  const updateProgram = (id) => {
+    let program = {
+      "title" : Title,
+      "description" : Description,
+      "goal" : Goal,
     };
 
-    FormerService.create(former);
-
+    ProgramService.update(program,id);
     handleClose();
 
   };
 
   return (
     <div>
-      <Stack  direction="column" justifyContent="flex-start" alignItems="stretch" spacing={2}  >
-          <Button variant="contained" onClick={handleClickOpen}>
-            <AddIcon/> Ajouter un formateur
-          </Button>
-         </Stack>
-      
+      <Button variant="outlined" onClick={handleClickOpen}>
+        Modifier
+      </Button>
       <Dialog
         open={open}
         onClose={handleClose}
@@ -58,7 +51,7 @@ export default function AddModel() {
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">
-          {"Add new Former"}
+          {"Update Program"}
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
@@ -73,17 +66,15 @@ export default function AddModel() {
           <Paper sx={{p: 2, margin: 2, maxWidth: 500, flexGrow: 1}} elevation={6}>
           
             <Stack spacing={1}>    
-                <Typography color={blue[800]} variant='button'>Ajouter un formateur</Typography>
+                <Typography color={blue[800]} variant='button'>Modifier un programme</Typography>
                 <Typography color={grey[500]} variant='body1'>Vous devez remplir tous les champs obligatoires. </Typography>
-                <TextField variant="outlined" helperText="Tappez ici Votre Nom" onChange={(e) => setUserName(e.target.value)}/>
-                <TextField variant="outlined" helperText="Tappez ici Votre Prenom" onChange={(e) => setUserLastname(e.target.value)}/>
-                <TextField variant="outlined" helperText="Tappez ici Votre Email" onChange={(e) => setUserEmail(e.target.value)}/>
-                <TextField variant="outlined" helperText="Tappez ici Votre spécialisation" onChange={(e) => setUserspecialisation(e.target.value)}/>
-                <TextField variant="outlined" helperText="Tappez ici Votre lien vers le CV" />
+                <TextField value={Title} variant="outlined" helperText="Tappez ici Votre Nom" onChange={(e) => setTitle(e.target.value)}/>
+                <TextField value={Description} variant="outlined" helperText="Tappez ici Votre Prenom" onChange={(e) => setDescription(e.target.value)}/>
+                <TextField value={Goal} variant="outlined" helperText="Tappez ici Votre Email" onChange={(e) => setGoal(e.target.value)}/>
             </Stack> 
            
          <Stack sx={{margin: 3}} spacing={2} direction={'row'} justifyContent="center">
-                <Button variant="contained"  onClick={() => addFormer()}  ><SaveIcon/> Enregistrer</Button>
+                <Button variant="contained"  onClick={() => updateProgram(parentToChild.id)}  ><SaveIcon/> Enregistrer</Button>
          </Stack>
           </Paper>
           </Grid>

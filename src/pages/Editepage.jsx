@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Button, Paper, Stack, TextField,Grid, Typography,RadioGroup, FormControlLabel, FormLabel,Checkbox,FormGroup, Select, MenuItem } from "@mui/material";
+import { Button, Paper, Stack, TextField,Grid, Typography } from "@mui/material";
 
 import{blue, grey} from "@mui/material/colors";
 
@@ -13,7 +13,7 @@ export default function Editepage() {
   let location  = useLocation();
   let history = useNavigate();
 
-  console.log(location.element);
+  console.log(location);
 
   let [nom, setNom] = React.useState(location.element.firstname);
   let [prenom, setPrenom] = React.useState(location.element.lastName);

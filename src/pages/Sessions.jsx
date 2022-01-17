@@ -1,17 +1,16 @@
-import React, { useState }  from 'react';
+import React, { useState, useEffect }  from 'react';
 
 import {Box,IconButton, Container, Grid, Table, TableFooter, TableHead, TableBody, TableRow, TableCell, Paper, Typography } from "@mui/material";
-import LearnerService from "../services/LearnerService";
+import SessionService from "../services/service";
+import ProgramService from "../services/ProgramService";
 import Delete from '@mui/icons-material/Delete';
-import {useNavigate} from 'react-router';
 
+import AlertDialog from "../modal/modalUpdateSession";
 import { styled, makeStyles } from '@material-ui/core/styles';
-import AddModel from "../modal/modalAddLearner";
+import AddModel from "../modal/modalAddSession";
 import TableContainer from '@material-ui/core/TableContainer';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import TablePagination from '@mui/material/TablePagination';
-
-import AlertDialog from "../modal/modalUpdateLearner";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -42,25 +41,46 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 
-export default function Learners() {
-  const classes = useStyles();
+export default function Sessions() {
+  
+    const dataToShow = [];
+    const classes = useStyles();
 
+  
+      const [sessionsData, setSessionsData] = useState([]);
 
-    let history = useNavigate();
+      useEffect(() => {
 
-      const loadDeletePage = function(id){
-        LearnerService.delete(id);
-      };
-      const [learnersData, setLearnersData] = useState([]);
+      SessionService.getAll().then(function(session) {
+        
+        session.forEach(doc => {
 
-      LearnerService.getAll().then(function(learner) {
+        if(doc.programRef){
 
-        setLearnersData(
-                learner
-            )
+            ProgramService.getById(doc.programRef.id).then(function(program) {
 
+              program.forEach(prog => {
+                
+                setSessionsData(
+                  session
+                )
+
+              })
+              
+          })
+        }
+        
     })
-    const [page, setPage] = React.useState(2);
+  
+  })
+
+  }, []); 
+
+  const loadDeletePage = function(id){
+    SessionService.delete(id);
+  };
+
+  const [page, setPage] = React.useState(2);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
   
     const handleChangePage = (event, newPage) => {
@@ -72,15 +92,13 @@ export default function Learners() {
       setPage(0);
     };
 
-
     return(
-
       <Container className={classes.container} maxWidth="lg">
         <Paper className={classes.paper}>
           <Box display="flex">
             <Box flexGrow={1}>
               <Typography component="h2" variant="h6" color="primary" gutterBottom>
-                Apprenants
+                Sessions
                 </Typography>
               </Box>
               <Box>
@@ -92,10 +110,9 @@ export default function Learners() {
             <Table className={classes.table} aria-label="simple table">
               <TableHead>
                 <TableRow>
-                  <TableCell className={classes.tableCell} style={{ width: 100 }} align="center">Nom</TableCell>
-                  <TableCell className={classes.tableCell} style={{ width: 100 }} align="center">Prénom</TableCell>
-                  <TableCell className={classes.tableCell} style={{ width: 100 }} align="center">Email</TableCell>
-                  <TableCell className={classes.tableCell} style={{ width: 100 }} align="center">Télephone</TableCell>
+                  <TableCell className={classes.tableCell} style={{ width: 100 }} align="center">Date de début</TableCell>
+                  <TableCell className={classes.tableCell} style={{ width: 100 }} align="center">Date de fin</TableCell>
+                  <TableCell className={classes.tableCell} style={{ width: 100 }} align="center">Programme</TableCell>
                   <TableCell className={classes.tableCell} style={{ width: 100 }} align="center">Modifier</TableCell>
                   <TableCell className={classes.tableCell} style={{ width: 100 }} align="center">Supprimer</TableCell>
   
@@ -103,12 +120,11 @@ export default function Learners() {
               </TableHead>
              <TableBody>
              {
-                learnersData.map((user) => (
+                sessionsData.map((user) => (
                   <TableRow key={user.id}>
-                    <TableCell align="center">{user.lastname}</TableCell>
-                    <TableCell align="center">{user.firstname}</TableCell>
-                    <TableCell align="center">{user.email}</TableCell>
-                    <TableCell align="center">{user.phone}</TableCell>
+                    <TableCell align="center">{user.startDate}</TableCell>
+                    <TableCell align="center">{user.endDate}</TableCell>
+                    <TableCell align="center">{user.title}</TableCell>
                     <TableCell align="center">
                       <AlertDialog parentToChild={user}/>
                     </TableCell>
@@ -128,7 +144,7 @@ export default function Learners() {
                     <Grid container spacing={2} columns={16}>
                       <Grid item xs={100}>
                         <Item>
-                          <Typography variant='body2' align="center">Nombre d'inscrits : {learnersData.length}</Typography>
+                          <Typography variant='body2' align="center">Nombre d'inscrits : {sessionsData.length}</Typography>
                         </Item>
                       </Grid>
                     </Grid>
@@ -153,6 +169,3 @@ export default function Learners() {
         
     );
 }
-
-
-

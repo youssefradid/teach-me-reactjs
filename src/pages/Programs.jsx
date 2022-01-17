@@ -1,17 +1,17 @@
 import React, { useState }  from 'react';
 
-import {Box,IconButton, Container, Grid, Table, TableFooter, TableHead, TableBody, TableRow, TableCell, Paper, Typography } from "@mui/material";
-import LearnerService from "../services/LearnerService";
+import {Box,IconButton, Container, Grid,  Drawer, Table, TableFooter, TableHead, TableBody, TableRow, TableCell, Paper, Typography } from "@mui/material";
 import Delete from '@mui/icons-material/Delete';
 import {useNavigate} from 'react-router';
 
+import ProgramService from '../services/ProgramService';
+
+import AlertDialog from "../modal/modalUpdateProgram";
+import AddProgramModal from "../modal/modalAddProgram";
 import { styled, makeStyles } from '@material-ui/core/styles';
-import AddModel from "../modal/modalAddLearner";
 import TableContainer from '@material-ui/core/TableContainer';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import TablePagination from '@mui/material/TablePagination';
-
-import AlertDialog from "../modal/modalUpdateLearner";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -42,21 +42,26 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 
-export default function Learners() {
-  const classes = useStyles();
 
+export default function Packs() {
+  
 
     let history = useNavigate();
-
-      const loadDeletePage = function(id){
-        LearnerService.delete(id);
+    const classes = useStyles();
+    const loadDeletePage = function(id){
+      ProgramService.delete(id);
+    };
+    
+    const gotoadd = function(){
+        history('/addpage');
       };
-      const [learnersData, setLearnersData] = useState([]);
 
-      LearnerService.getAll().then(function(learner) {
+      const [ProgramsData, setProgramsData] = useState([]);
 
-        setLearnersData(
-                learner
+      ProgramService.getAll().then(function(Program) {
+
+        setProgramsData(
+                Program
             )
 
     })
@@ -74,17 +79,16 @@ export default function Learners() {
 
 
     return(
-
       <Container className={classes.container} maxWidth="lg">
         <Paper className={classes.paper}>
           <Box display="flex">
             <Box flexGrow={1}>
               <Typography component="h2" variant="h6" color="primary" gutterBottom>
-                Apprenants
+                Packs
                 </Typography>
               </Box>
               <Box>
-              <AddModel />
+              <AddProgramModal />
               </Box>
             </Box>
   
@@ -92,10 +96,9 @@ export default function Learners() {
             <Table className={classes.table} aria-label="simple table">
               <TableHead>
                 <TableRow>
-                  <TableCell className={classes.tableCell} style={{ width: 100 }} align="center">Nom</TableCell>
-                  <TableCell className={classes.tableCell} style={{ width: 100 }} align="center">Prénom</TableCell>
-                  <TableCell className={classes.tableCell} style={{ width: 100 }} align="center">Email</TableCell>
-                  <TableCell className={classes.tableCell} style={{ width: 100 }} align="center">Télephone</TableCell>
+                  <TableCell className={classes.tableCell} style={{ width: 100 }} align="center">Title</TableCell>
+                  <TableCell className={classes.tableCell} style={{ width: 100 }} align="center">Description</TableCell>
+                  <TableCell className={classes.tableCell} style={{ width: 100 }} align="center">Objectif</TableCell>
                   <TableCell className={classes.tableCell} style={{ width: 100 }} align="center">Modifier</TableCell>
                   <TableCell className={classes.tableCell} style={{ width: 100 }} align="center">Supprimer</TableCell>
   
@@ -103,12 +106,11 @@ export default function Learners() {
               </TableHead>
              <TableBody>
              {
-                learnersData.map((user) => (
+                ProgramsData.map((user) => (
                   <TableRow key={user.id}>
-                    <TableCell align="center">{user.lastname}</TableCell>
-                    <TableCell align="center">{user.firstname}</TableCell>
-                    <TableCell align="center">{user.email}</TableCell>
-                    <TableCell align="center">{user.phone}</TableCell>
+                    <TableCell align="center">{user.title}</TableCell>
+                    <TableCell align="center">{user.description}</TableCell>
+                    <TableCell align="center">{user.goal}</TableCell>
                     <TableCell align="center">
                       <AlertDialog parentToChild={user}/>
                     </TableCell>
@@ -128,7 +130,7 @@ export default function Learners() {
                     <Grid container spacing={2} columns={16}>
                       <Grid item xs={100}>
                         <Item>
-                          <Typography variant='body2' align="center">Nombre d'inscrits : {learnersData.length}</Typography>
+                          <Typography variant='body2' align="center">Nombre d'inscrits : {ProgramsData.length}</Typography>
                         </Item>
                       </Grid>
                     </Grid>
@@ -150,6 +152,7 @@ export default function Learners() {
                     </Grid>
                 </Paper>
         </Container>
+      
         
     );
 }
