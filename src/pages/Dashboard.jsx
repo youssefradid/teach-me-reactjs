@@ -2,59 +2,26 @@ import React, { useState, useEffect }  from 'react';
 
 import {ListItemIcon,Box,IconButton, ListItemText,ListItem,Button,Stack, List, Container, Grid,  Drawer, Table, TableFooter, TableHead, TableBody, TableRow, TableCell, Paper, Typography, Card, CardHeader, Avatar,  CardContent, } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
-import SaveIcon from '@mui/icons-material/Save';
 
 import {useNavigate} from 'react-router';
-
-import { getFirestore, doc, onSnapshot, collection, query, where, getDocs, getDoc } from "firebase/firestore";
-import db from '../firebase'
-
 import SessionService from "../services/service";
 import LearnerService from "../services/LearnerService";
-import ProgramService from "../services/ProgramService";
-import PackService from "../services/PackService";
 import SouscriptionService from "../services/SouscriptionService";
-import Learner from "../entity/Learner";
-
-
 import { styled, useTheme } from '@mui/material/styles';
-
-
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
-
 import Divider from '@mui/material/Divider';
-
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
 import LogoutIcon from '@mui/icons-material/Logout';
-import IndeterminateCheckBoxIcon from '@mui/icons-material/IndeterminateCheckBox';
-import Delete from '@mui/icons-material/Delete';
-import Create from '@mui/icons-material/Create';
-import AddCircle from '@mui/icons-material/AddCircle';
+
 import AccessibilityTwoTone from '@mui/icons-material/AccessibilityTwoTone';
-import { CoPresentOutlined } from '@mui/icons-material';
 
 
 function Line(props){
   
-    let history = useNavigate();
-  
-    const gotoeditepage = function(){
-      history('/editepage');
-    };
-  
-    const loadDeletePage = function(){
-      history('/delete-program-page');
-    };
-
     return(
       
       <TableRow>
@@ -96,15 +63,6 @@ export default function Dashboard() {
   
       })
       })
-          
-
-        const gotoadd = function(){
-          history('/addpage');
-        };
-        
-        const logout = function() {
-          window.location.href = '/';
-      };
 
 const drawerWidth = 300;
 
@@ -249,7 +207,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
         <Grid item md={10}>
 
         <Stack  direction="column" justifyContent="flex-start" alignItems="stretch" spacing={2}  >
-                <Button variant="contained" onClick={gotoadd} ><AddIcon/> Ajouter </Button>
+                <Button variant="contained"  ><AddIcon/> Ajouter </Button>
          </Stack>
 
           <Grid container rowSpacing={2} columnSpacing={2}>
@@ -285,14 +243,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
         </Grid>
       </Grid>
     </Container>
-              
-
-
       </Main>
     </Box>
   );
 }
-
-
-
-              

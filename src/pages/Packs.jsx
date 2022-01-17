@@ -41,13 +41,6 @@ function Line(props){
 
 export default function Packs() {
   
-
-    let history = useNavigate();
-
-    const gotoadd = function(){
-        history('/addpage');
-      };
-
       const [packsData, setPacksData] = useState([]);
 
       PackService.getAll().then(function(pack) {
@@ -55,7 +48,6 @@ export default function Packs() {
         setPacksData(
                 pack
             )
-
     })
 
 
@@ -64,7 +56,7 @@ export default function Packs() {
          
 
          <Stack  direction="column" justifyContent="flex-start" alignItems="stretch" spacing={2}  >
-                <Button variant="contained" onClick={gotoadd} ><AddIcon/> Ajouter </Button>
+                <Button variant="contained" ><AddIcon/> Ajouter </Button>
          </Stack>
          <Grid container rowSpacing={2} columnSpacing={2}>
             <Grid item xs={12}>
@@ -96,6 +88,3 @@ export default function Packs() {
         </div>
     );
 }
-
-
-
