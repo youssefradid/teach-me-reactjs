@@ -7,12 +7,12 @@ import SaveIcon from '@mui/icons-material/Save';
 import SessionService from "../services/service";
 import ProgramService from "../services/ProgramService";
 import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import AddIcon from '@mui/icons-material/Add';
-
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
 import { getFirestore, doc } from "firebase/firestore";
 
 
@@ -23,6 +23,8 @@ export default function AddModel() {
   const [startDate, setStartDate] = useState("");
   const [programData, setProgram] = useState([]);
   const [programId, setProgramId] = useState([]);
+  const [cal1, onChange1] = useState(new Date());
+  const [cal2, onChange2] = useState(new Date());
 
   ProgramService.getAll().then(function(program) {
 
@@ -44,8 +46,8 @@ export default function AddModel() {
   const addSession = () => {
 
     let session = {
-      "endDate" : endDate,
-      "startDate" : startDate,
+      "endDate" : cal2.toLocaleDateString(),
+      "startDate" : cal1.toLocaleDateString(),
       "programRef" : doc(getFirestore(), 'Program/' + programId)
     };
 
@@ -83,10 +85,23 @@ export default function AddModel() {
           <Paper sx={{p: 2, margin: 2, maxWidth: 500, flexGrow: 1}} elevation={6}>
           
             <Stack spacing={1}>    
-                <Typography color={blue[800]} variant='button'>Ajouter un formateur</Typography>
+               <Typography color={blue[800]} variant='button'>Ajouter d'une session </Typography>
                 <Typography color={grey[500]} variant='body1'>Vous devez remplir tous les champs obligatoires. </Typography>
-                <TextField variant="outlined" helperText="Tappez ici end Date" onChange={(e) => setEndDate(e.target.value)}/>
-                <TextField variant="outlined" helperText="Tappez ici start Date" onChange={(e) => setStartDate(e.target.value)}/>
+               {/*   <TextField variant="outlined" helperText="Tappez ici end Date" onChange={(e) => setEndDate(e.target.value)}/>
+                  <TextField variant="outlined" helperText="Tappez ici start Date" onChange={(e) => setStartDate(e.target.value)}/> */}
+
+                <Calendar
+                onChange={onChange1}
+                value={cal1}
+                  />
+
+              <Calendar
+                onChange={onChange2}
+                value={cal2}
+                  />
+
+
+
                 <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"

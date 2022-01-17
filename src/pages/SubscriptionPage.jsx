@@ -26,8 +26,10 @@ export default function SubscriptionPage() {
 const nextStep = function(event){ 
 
    setCurrentStep(currentStep +1); 
-  
-   if(packId){
+
+   let learnerID = window.sessionStorage.getItem("learner");
+
+   if(packId && learnerID){
 
    PackService.getById(packId).then(function(pack) {  
     pack.forEach(doc => {
@@ -55,7 +57,7 @@ const nextStep = function(event){
         setSessionData(sessionsTab);
   })
   })
-  let learnerID = window.sessionStorage.getItem("learner");
+ 
   if( sessionId.length > 0 && checkedValue === "on"){
       let souscription = {
         "learnerRef" : doc(getFirestore(), 'Leaner/' + learnerID),

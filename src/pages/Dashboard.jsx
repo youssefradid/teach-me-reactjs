@@ -81,7 +81,7 @@ export default function Dashboard() {
 
   let history = useNavigate();
   const [customersData, setCustomersData] = useState([]);
-
+  const [learnerName, setLearnerName] = useState([]);
 
   SouscriptionService.getAll().then(function(souscription) {
 
@@ -103,6 +103,21 @@ export default function Dashboard() {
   
       })
     })
+
+    const learnerID = window.sessionStorage.getItem("learner");
+
+    if(learnerID){
+
+      LearnerService.getById(learnerID).then(function(learner){
+
+        setLearnerName(
+          learner
+        )
+
+      })
+      
+    }
+    
 
     
 
@@ -215,7 +230,7 @@ const [page, setPage] = React.useState(2);
         open={open}
       >
         <DrawerHeader>
-        hello
+        { learnerName.firstname }
           <IconButton onClick={handleDrawerClose}>
          
             {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
