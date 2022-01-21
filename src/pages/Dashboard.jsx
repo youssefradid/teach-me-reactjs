@@ -1,4 +1,4 @@
-import React, { useState }  from 'react';
+import React, { useEffect, useState }  from 'react';
 
 import { ListItemIcon, Box, IconButton, ListItemText, ListItem, Button, List, Container, Grid,  Drawer, Table, TableFooter, TableHead, TableBody, TableRow, TableCell, Paper, Typography } from "@mui/material";
 
@@ -6,6 +6,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import SouscriptionService from "../services/SouscriptionService";
 import SessionService from "../services/service";
 import LearnerService from "../services/LearnerService";
+import FormerService from "../services/FormerService";
 import {useNavigate} from 'react-router';
 import TablePagination from '@mui/material/TablePagination';
 import { styled, useTheme, makeStyles } from '@material-ui/core/styles';
@@ -82,6 +83,7 @@ export default function Dashboard() {
   let history = useNavigate();
   const [customersData, setCustomersData] = useState([]);
   const [learnerName, setLearnerName] = useState([]);
+  const [formerName, setFormerName] = useState([]);
 
   SouscriptionService.getAll().then(function(souscription) {
 
@@ -105,17 +107,35 @@ export default function Dashboard() {
     })
 
     const learnerID = window.sessionStorage.getItem("learner");
+    const formerID = window.sessionStorage.getItem("former");
 
-    if(learnerID){
-      LearnerService.getById(learnerID).then(function(learner){
+    useEffect(() => {
 
-        setLearnerName(
-          learner
-        )
+          if(learnerID){
+            
+              if(learnerID){
+                LearnerService.getById(learnerID).then(function(learner){
+                  setLearnerName(
+                    learner
+                  )
+        
+                })
+              }
+          }
+          else if(formerID){
+            console.log(formerID);
+            FormerService.getById(formerID).then(function(former){
+              setFormerName(
+                former
+              )
+    
+            })
+          }
 
-      })
-      
-    }
+        }, []);
+    
+
+    
     
 const drawerWidth = 300;
 
@@ -226,7 +246,21 @@ const [page, setPage] = React.useState(2);
         open={open}
       >
         <DrawerHeader>
-        { learnerName.firstname }
+        <Typography variant="h5" gutterBottom component="div" style={{color:"#00adb5"}} >
+       Bienvenue
+                {
+
+                    learnerName && learnerName.map((l) => (
+                      " "+l.firstname + " " + l.lastname
+                      ))
+                    }
+                    {
+                      formerName && formerName.map((f) => (
+                        " "+f.firstname + " " + f.lastname
+                        ))
+
+                }
+      </Typography>
           <IconButton onClick={handleDrawerClose}>
          
             {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
