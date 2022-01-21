@@ -141,6 +141,7 @@ export default function AlertDialog({parentToChild})  {
                   />
                 </Grid>
               </Grid>
+              <br/>
               <Button
                 type="submit"
                 fullWidth
@@ -148,8 +149,10 @@ export default function AlertDialog({parentToChild})  {
                 color="primary"
                 className={classes.submit}
               >
+              
                 Enregistrer
               </Button>
+              
             </form>
           </div>
         </Container>

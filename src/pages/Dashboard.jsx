@@ -2,6 +2,7 @@ import React, { useEffect, useState }  from 'react';
 
 import { ListItemIcon, Box, IconButton, ListItemText, ListItem, Button, List, Container, Grid,  Drawer, Table, TableFooter, TableHead, TableBody, TableRow, TableCell, Paper, Typography } from "@mui/material";
 
+import { Navigate } from 'react-router-dom';
 import TableContainer from '@material-ui/core/TableContainer';
 import SouscriptionService from "../services/SouscriptionService";
 import SessionService from "../services/service";
@@ -85,6 +86,9 @@ export default function Dashboard() {
   const [learnerName, setLearnerName] = useState([]);
   const [formerName, setFormerName] = useState([]);
 
+  const learnerID = window.sessionStorage.getItem("learner");
+  const formerID = window.sessionStorage.getItem("former");
+
   SouscriptionService.getAll().then(function(souscription) {
 
     souscription.forEach(doc => {
@@ -106,8 +110,7 @@ export default function Dashboard() {
       })
     })
 
-    const learnerID = window.sessionStorage.getItem("learner");
-    const formerID = window.sessionStorage.getItem("former");
+    
 
     useEffect(() => {
 
@@ -212,6 +215,11 @@ const [page, setPage] = React.useState(2);
     setPage(0);
   };
 
+if (!learnerID || !formerID) {
+        return (
+            <Navigate to="/" />
+        )
+  }
 
   return (
     <Box sx={{ display: 'flex' }}>

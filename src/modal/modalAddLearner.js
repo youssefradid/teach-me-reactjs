@@ -223,7 +223,6 @@ export default function AddModel() {
 
         </Grid>
           <Button
-            type="submit"
             fullWidth
             variant="contained"
             color="primary"
