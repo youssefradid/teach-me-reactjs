@@ -16,7 +16,7 @@ export default function AlertDialog({parentToChild})  {
   const [open, setOpen] = useState(false);
   const [endDate, setEndDate] = useState(parentToChild.endDate);
   const [startDate, setStartDate] = useState(parentToChild.startDate);
-
+  const [programmeId, setProgrammeId] = useState(parentToChild.programRef.id);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -67,6 +67,7 @@ export default function AlertDialog({parentToChild})  {
                 <Typography color={grey[500]} variant='body1'>Vous devez remplir tous les champs obligatoires. </Typography>
                 <TextField value={endDate} variant="outlined" helperText="Tappez ici Votre end Date" onChange={(e) => setEndDate(e.target.value)}/>
                 <TextField value={startDate} variant="outlined" helperText="Tappez ici Votre start Date" onChange={(e) => setStartDate(e.target.value)}/>
+                <TextField value={programmeId} variant="outlined" helperText="Tappez ici Votre start Date" onChange={(e) => setStartDate(e.target.value)}/>
             </Stack> 
            
          <Stack sx={{margin: 3}} spacing={2} direction={'row'} justifyContent="center">

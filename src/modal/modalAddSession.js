@@ -87,9 +87,6 @@ export default function AddModel() {
             <Stack spacing={1}>    
                <Typography color={blue[800]} variant='button'>Ajouter d'une session </Typography>
                 <Typography color={grey[500]} variant='body1'>Vous devez remplir tous les champs obligatoires. </Typography>
-               {/*   <TextField variant="outlined" helperText="Tappez ici end Date" onChange={(e) => setEndDate(e.target.value)}/>
-                  <TextField variant="outlined" helperText="Tappez ici start Date" onChange={(e) => setStartDate(e.target.value)}/> */}
-
                 <Calendar
                 onChange={onChange1}
                 value={cal1}

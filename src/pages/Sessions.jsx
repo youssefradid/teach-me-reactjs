@@ -61,8 +61,15 @@ export default function Sessions() {
 
               program.forEach(prog => {
                 
+
+              dataToShow.push( [ Object.assign({}, prog, doc)] );
+             
+             const combined = dataToShow.reduce((acc, result) => { 
+              return acc.concat(result)
+              }, []);
+console.log(combined);
                 setSessionsData(
-                  session
+                  combined
                 )
 
               })
