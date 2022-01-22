@@ -23,13 +23,12 @@ export default function SubscriptionPage() {
 
 const nextStep = function(event){ 
 
-   setCurrentStep(currentStep +1); 
-
+  
    let learnerID = window.sessionStorage.getItem("learner");
 
    if(packId && learnerID){
 
-   PackService.getById(packId).then(function(pack) {  
+   PackService.getById(packId).then(function(pack) {
     pack.forEach(doc => {
     ProgramService.getById(doc.programRef.id).then(function(program) {  
 
@@ -75,10 +74,14 @@ const nextStep = function(event){
 
       SouscriptionService.create(souscription);
     }
-
+ setCurrentStep(currentStep +1); 
+}
+else{
+  alert("please select a pack from the list");
 }
 
 }
+
 }
 
 const goBack = function(event){  setCurrentStep(currentStep -1);   }

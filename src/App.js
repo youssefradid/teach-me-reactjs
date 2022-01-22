@@ -1,4 +1,4 @@
-
+import { Navigate } from 'react-router-dom';
 import { BrowserRouter, Routes , Route } from 'react-router-dom';
 import RegisterForm from './pages/RegisterForm';
 import LoginForm from './pages/LoginForm';
@@ -15,7 +15,11 @@ import Sessions from "./pages/Sessions";
 import Delete from "./pages/Delete";
 
 
+
 export default function App(){
+
+
+
     return(
             <BrowserRouter>
             <Routes >

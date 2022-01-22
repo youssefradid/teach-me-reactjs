@@ -137,13 +137,12 @@ export default function Learners() {
                   </TableContainer>
                   <Grid item xs={100}>
                         <Item>
-  
                         <TablePagination
                           component="div"
-                          count={100}
+                          count={learnersData.length}
                           page={page}
                           onPageChange={handleChangePage}
-                          rowsPerPage={rowsPerPage}
+                          rowsPerPage={5}
                           onRowsPerPageChange={handleChangeRowsPerPage}
                         />
                       </Item>

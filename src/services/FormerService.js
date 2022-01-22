@@ -27,6 +27,25 @@ class LearnerService {
     return dataToShow;
   }
     
+  getById = async (id) => {
+  let dataToShow = [];
+  const docRef = doc(db, id.trim());
+  const docSnap = await getDoc(docRef);
+
+    const { firstname, lastname, email, specialisation, password } = docSnap.data();
+    dataToShow = [
+      {
+        "id" : docSnap.id,
+        "firstname": firstname,
+        "lastname": lastname,
+        "email": email,
+        "specialisation": specialisation,
+        "password" : password
+      }
+    ];
+  return dataToShow;
+}
+
   create = async (tutorial) => {
     return  await addDoc(db, tutorial);
   }
