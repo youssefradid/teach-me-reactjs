@@ -3,12 +3,11 @@ import { Button,FormControlLabel ,Stack, Checkbox, Stepper,Step,StepLabel,StepCo
 
 import { Select, MenuItem } from "@mui/material";
 import { getFirestore, doc } from "firebase/firestore";
-import { useLocation } from "react-router";
 import PackService from "../services/PackService";
-import { useNavigate } from "react-router";
 import ProgramService from "../services/ProgramService";
 import SouscriptionService from "../services/SouscriptionService";
 import SessionService from "../services/service";
+import { Navigate } from 'react-router-dom';
 
 export default function SubscriptionPage() {
 
@@ -20,13 +19,13 @@ export default function SubscriptionPage() {
   const [programId, setProgramId] = useState([]);
   const [checkedValue, setChecked] = useState([]);
   const [sessionId, setSessionId] = useState([]);
+  const learnerID = window.sessionStorage.getItem("learner");
 
 const nextStep = function(event){ 
 
-  
    let learnerID = window.sessionStorage.getItem("learner");
 
-   if(packId && learnerID){
+   if(packId != "" && learnerID){
 
    PackService.getById(packId).then(function(pack) {
     pack.forEach(doc => {
@@ -54,8 +53,8 @@ const nextStep = function(event){
         setSessionData(sessionsTab);
   })
   })
- 
-  if( sessionId.length > 0 && checkedValue === "on"){
+ if(sessionId.length > 0 && currentStep == 3){
+  if(  checkedValue === "on"){
       let souscription = {
         "learnerRef" : doc(getFirestore(), 'Leaner/' + learnerID),
         "packRef" : doc(getFirestore(), 'Pack/' + packId),
@@ -64,7 +63,7 @@ const nextStep = function(event){
       };
 
       SouscriptionService.create(souscription);
-    }else {
+    }else{
       let souscription = {
         "learnerRef" : doc(getFirestore(), 'Leaner/' + learnerID),
         "packRef" : doc(getFirestore(), 'Pack/' + packId),
@@ -74,14 +73,10 @@ const nextStep = function(event){
 
       SouscriptionService.create(souscription);
     }
- setCurrentStep(currentStep +1); 
+  }
 }
-else{
-  alert("please select a pack from the list");
+setCurrentStep(currentStep +1); 
 }
-
-}
-
 }
 
 const goBack = function(event){  setCurrentStep(currentStep -1);   }
@@ -93,7 +88,11 @@ const goBack = function(event){  setCurrentStep(currentStep -1);   }
                 )
   })
 
-  
+  if (!learnerID) {
+    return (
+        <Navigate to="/dashboard" />
+    )
+  }
 
     return(
       <Container maxWidth={'md'}>

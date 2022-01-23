@@ -49,6 +49,8 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
+
+
 function Line(props){
   
     return(
@@ -89,18 +91,20 @@ export default function Dashboard() {
   const learnerID = window.sessionStorage.getItem("learner");
   const formerID = window.sessionStorage.getItem("former");
 
+  useEffect(() => {
+
   SouscriptionService.getAll().then(function(souscription) {
 
     souscription.forEach(doc => {
           
-      Promise.all([LearnerService.getById(doc.learnerRef.id),SessionService.getById(doc.sessionRef.id)]).then(function(result){
+      Promise.all([LearnerService.getById(doc.learnerRef.id),SessionService.getById(doc.sessionRef.id)]).then(function(result,res){
 
           const combined = result.reduce((acc, result) => { 
                       return acc.concat(result)
                   }, []);
 
                   const newItem = [ Object.assign({}, combined[0], combined[1])];
-
+                  console.log(newItem);
                         setCustomersData
                           (
                             newItem
@@ -109,21 +113,20 @@ export default function Dashboard() {
   
       })
     })
-
+ }, []); 
     
-
+ 
     useEffect(() => {
-
+      
           if(learnerID){
             
-              if(learnerID){
+                console.log(learnerID);
                 LearnerService.getById(learnerID).then(function(learner){
                   setLearnerName(
                     learner
                   )
-        
+                  
                 })
-              }
           }
           else if(formerID){
             console.log(formerID);
@@ -215,11 +218,7 @@ const [page, setPage] = React.useState(2);
     setPage(0);
   };
 
-if (!learnerID || !formerID) {
-        return (
-            <Navigate to="/" />
-        )
-  }
+ 
 
   return (
     <Box sx={{ display: 'flex' }}>
