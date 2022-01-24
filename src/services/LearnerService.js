@@ -51,13 +51,13 @@ getById = async (id) => {
     return  await addDoc(db, learner);
   }
 
-  update = async (tutorial,id) => {
+  update = async (learner,id) => {
     const washingtonRef = doc(database, "Leaner", id);
     return await updateDoc(washingtonRef, {
-        firstname: tutorial.firstname,
-        lastname: tutorial.lastname,
-        email: tutorial.email,
-        phone: tutorial.phone
+        firstname: learner.firstname,
+        lastname: learner.lastname,
+        email: learner.email,
+        phone: learner.phone
       });
   }
 

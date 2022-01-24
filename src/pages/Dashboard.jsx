@@ -86,7 +86,7 @@ export default function Dashboard() {
 
   let history = useNavigate();
   const [customersData, setCustomersData] = useState([]);
-  const [learnerName, setLearnerName] = useState([]);
+  
   const [formerName, setFormerName] = useState([]);
 
   const learnerID = window.sessionStorage.getItem("learner");
@@ -191,7 +191,7 @@ const handleDrawerClose = () => {
   setOpen(false);
 };
 
-var listItemText = { 'Gestion des apprenants' : "/learners", 'Gestion des formateurs' : "/formers", 'Gestion des programmes' : "/programs", 'Gestion des sessions' : "/sessions", "Gestion des packs" : "/packs", "Les souscriptions" : "/subcription-Page"};
+var listItemText = { 'Gestion des apprenants' : "/learners", 'Gestion des formateurs' : "/formers", 'Gestion des programmes' : "/programs", 'Gestion des sessions' : "/sessions", "Gestion des packs" : "/packs"};
 
 var listItemTextUnderDivider = { 'Logout' : "/"};
 
@@ -216,17 +216,8 @@ const [page, setPage] = React.useState(2);
                     result
                   )
 
-          if(learnerID){
-            
-                LearnerService.getById(learnerID).then(function(learner){
-                  setLearnerName(
-                    learner
-                  )
-                  
-                })
-          }
-          else if(formerID){
-            console.log(formerID);
+          
+           if(formerID){
             FormerService.getById(formerID).then(function(former){
               setFormerName(
                 former
@@ -237,6 +228,13 @@ const [page, setPage] = React.useState(2);
 
         }, []);
 
+if ( formerID == null ) {
+          return (
+              <Navigate to="/" />
+    )
+}
+
+    
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
@@ -272,12 +270,7 @@ const [page, setPage] = React.useState(2);
         <DrawerHeader>
         <Typography variant="h5" gutterBottom component="div" style={{color:"#00adb5"}} >
        Bienvenue
-                {
-
-                    learnerName && learnerName.map((l) => (
-                      " "+l.firstname + " " + l.lastname
-                      ))
-                    }
+                
                     {
                       formerName && formerName.map((f) => (
                         " "+f.firstname + " " + f.lastname
@@ -295,9 +288,7 @@ const [page, setPage] = React.useState(2);
         <List>
         {Object.keys(listItemText).map((key, index) => (
             <ListItem button onClick={() => history(listItemText[key])}>
-              <ListItemIcon>
-                {index % 2 === 0 ? <AccessibilityTwoTone /> : <AccessibilityTwoTone />}
-              </ListItemIcon>
+              
               <ListItemText primary={key} />
             </ListItem>
           ))}
@@ -322,7 +313,7 @@ const [page, setPage] = React.useState(2);
         <Box display="flex">
           <Box flexGrow={1}>
             <Typography component="h2" variant="h6" color="primary" gutterBottom>
-              Apprenants
+              les souscriptions
               </Typography>
             </Box>
           </Box>

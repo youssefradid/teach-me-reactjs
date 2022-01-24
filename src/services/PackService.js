@@ -43,15 +43,15 @@ class PackService {
 
   
   
-  create = async (tutorial) => {
-    return  await addDoc(db, tutorial);
+  create = async (pack) => {
+    return  await addDoc(db, pack);
   }
 
-  update = async (tutorial,id) => {
+  update = async (pack,id) => {
     const washingtonRef = doc(database, "Pack", id);
     return await updateDoc(washingtonRef, {
-        label: tutorial.label,
-        price: tutorial.price
+        label: pack.label,
+        price: pack.price
       });
   }
 

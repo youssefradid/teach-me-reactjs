@@ -1,6 +1,6 @@
 import React, { useState }  from 'react';
 
-import {Box,IconButton, Container, Grid, Table, TableFooter, TableHead, TableBody, TableRow, TableCell, Paper, Typography } from "@mui/material";
+import {Box,IconButton, Container, Grid,Link ,Table, TableFooter, TableHead, TableBody, TableRow, TableCell, Paper, Typography } from "@mui/material";
 import FormerService from "../services/FormerService";
 import {useNavigate} from 'react-router';
 import AlertDialog from "../modal/modalUpdateFormer";
@@ -152,6 +152,7 @@ export default function Formers() {
                   <TableCell className={classes.tableCell} style={{ width: 100 }} align="center">Prénom</TableCell>
                   <TableCell className={classes.tableCell} style={{ width: 100 }} align="center">Email</TableCell>
                   <TableCell className={classes.tableCell} style={{ width: 100 }} align="center">Spécialisation</TableCell>
+                  <TableCell className={classes.tableCell} style={{ width: 100 }} align="center">CV</TableCell>
                   <TableCell className={classes.tableCell} style={{ width: 100 }} align="center">Modifier</TableCell>
                   <TableCell className={classes.tableCell} style={{ width: 100 }} align="center">Supprimer</TableCell>
   
@@ -165,6 +166,7 @@ export default function Formers() {
                     <TableCell align="center">{user.firstname}</TableCell>
                     <TableCell align="center">{user.email}</TableCell>
                     <TableCell align="center">{user.specialisation}</TableCell>
+                    <TableCell align="center"><Link>{user.cv}</Link></TableCell>
                     <TableCell align="center">
                       <AlertDialog parentToChild={user}/>
                     </TableCell>

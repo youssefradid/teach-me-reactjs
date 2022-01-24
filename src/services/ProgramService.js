@@ -44,16 +44,16 @@ class ProgramService {
   }
 
   
-  create = async (tutorial) => {
-    return  await addDoc(db, tutorial);
+  create = async (program) => {
+    return  await addDoc(db, program);
   }
 
-  update = async (tutorial,id) => {
+  update = async (program,id) => {
     const washingtonRef = doc(database, "Program", id);
     return await updateDoc(washingtonRef, {
-        title: tutorial.title,
-        description: tutorial.description,
-        goal: tutorial.goal
+        title: program.title,
+        description: program.description,
+        goal: program.goal
       });
   }
 
