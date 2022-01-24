@@ -6,6 +6,7 @@ import { Navigate } from 'react-router-dom';
 import TableContainer from '@material-ui/core/TableContainer';
 import SouscriptionService from "../services/SouscriptionService";
 import SessionService from "../services/service";
+import ProgramService from "../services/ProgramService";
 import LearnerService from "../services/LearnerService";
 import FormerService from "../services/FormerService";
 import {useNavigate} from 'react-router';
@@ -92,20 +93,32 @@ export default function Dashboard() {
   const formerID = window.sessionStorage.getItem("former");
 
 
-function fetchData(){
+   function fetchData(){
   let dataToShow = [];
   SouscriptionService.getAll().then(function(souscription) {
 
     souscription.forEach(doc => {
           
-      Promise.all([LearnerService.getById(doc.learnerRef.id),SessionService.getById(doc.sessionRef.id)]).then(function(result){
+       Promise.all([LearnerService.getById(doc.learnerRef.id),SessionService.getById(doc.sessionRef.id)]).then(function(result){
 
           const combined = result.reduce((acc, result) => { 
                       return acc.concat(result)
                   }, []);
 
+
                   const newItem = Object.assign({}, combined[0], combined[1]);
-                  dataToShow.push(newItem);
+
+                  ProgramService.getAll().then(function(program){
+                    program.forEach(prog => {
+
+                    if(prog.id === newItem.programRef.id){
+                      dataToShow.push({...newItem, ...prog});
+                    }
+                    
+                  })
+                  })
+
+                  
 
             })
   
@@ -115,34 +128,6 @@ return dataToShow;
 }
 
 
-  useEffect(() => {
-
-    let result = fetchData();
-                  setCustomersData
-                  (
-                    result
-                  )
-
-          if(learnerID){
-            
-                LearnerService.getById(learnerID).then(function(learner){
-                  setLearnerName(
-                    learner
-                  )
-                  
-                })
-          }
-          else if(formerID){
-            console.log(formerID);
-            FormerService.getById(formerID).then(function(former){
-              setFormerName(
-                former
-              )
-    
-            })
-          }
-
-        }, []);
     
 
     
@@ -223,6 +208,34 @@ const [page, setPage] = React.useState(2);
   };
 
  
+  useEffect( () => {
+
+    const result =  fetchData();
+                  setCustomersData
+                  (
+                    result
+                  )
+
+          if(learnerID){
+            
+                LearnerService.getById(learnerID).then(function(learner){
+                  setLearnerName(
+                    learner
+                  )
+                  
+                })
+          }
+          else if(formerID){
+            console.log(formerID);
+            FormerService.getById(formerID).then(function(former){
+              setFormerName(
+                former
+              )
+    
+            })
+          }
+
+        }, []);
 
   return (
     <Box sx={{ display: 'flex' }}>
