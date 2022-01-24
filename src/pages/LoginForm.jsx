@@ -1,12 +1,17 @@
 import React, { useState }  from 'react';
 
-import { Alert, Button, Paper, Stack, TextField, FormControl, InputLabel, Typography,Grid,Checkbox,FormGroup, Select, MenuItem } from "@mui/material";
+import { Alert, Modal,Box, Button, Paper, Stack, TextField, FormControl, InputLabel, Typography,Grid,Checkbox,FormGroup, Select, MenuItem } from "@mui/material";
 import Header from '../header/header';
 import{blue} from "@mui/material/colors";
 import { useNavigate } from "react-router";
 import LearnerService from "../services/LearnerService";
 import FormerService from "../services/FormerService";
-import UserNotExist from "../modal/userNotExist"
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+
 export default function RegisterForm() {
 
     let history = useNavigate();
@@ -17,7 +22,7 @@ export default function RegisterForm() {
     const [CheckUserPassword, setCheckUserPassword] = useState(true);
     const [UserIdentity, setUserIdentity] = useState("");
     const [CheckUserIdentity, setCheckUserIdentity] = useState(true);
-    const [CheckUserNotExist, setCheckUserNotExist] = useState("");
+    const [open, setOpen] = useState(false);
 
     const allLearners = LearnerService.getAll();
     const allFormers = FormerService.getAll();
@@ -25,6 +30,14 @@ export default function RegisterForm() {
     window.sessionStorage.clear()
     window.sessionStorage.removeItem('learner');
     window.sessionStorage.removeItem('former');
+
+    const handleClickOpen = () => {
+      setOpen(true);
+    };
+  
+    const handleClose = () => {
+      setOpen(false);
+    };
 
     const submit = (e) => {
       if(UserEmail.length>0 && UserPassword.length>0){
@@ -41,7 +54,7 @@ export default function RegisterForm() {
                     gotoDash();
                   }
                   else{
-                    setCheckUserNotExist(true);
+                    handleClickOpen();
                   }
       
             })
@@ -59,7 +72,7 @@ export default function RegisterForm() {
                 gotoDash();
                   }
                   else{
-                    setCheckUserNotExist(true);
+                    handleClickOpen();
                   }
       
             })
@@ -93,7 +106,6 @@ export default function RegisterForm() {
                 justifyContent="center"
                 alignItems="flex-end"
             >
-            {UserNotExist ? <UserNotExist  /> : <></> }
             <Paper sx={{ p: 2, margin: 20, maxWidth: 500, flexGrow: 1 }} elevation={5} >
             
               <Stack spacing={1} > 
@@ -127,6 +139,21 @@ export default function RegisterForm() {
             </Paper>
           
          </Grid>
+         <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Utilisateur n'existe pas !!"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+
+          </DialogContentText>
+        </DialogContent>
+        </Dialog>
         </div>
        
     );
