@@ -91,36 +91,40 @@ export default function Dashboard() {
   const learnerID = window.sessionStorage.getItem("learner");
   const formerID = window.sessionStorage.getItem("former");
 
-  useEffect(() => {
 
+function fetchData(){
+  let dataToShow = [];
   SouscriptionService.getAll().then(function(souscription) {
 
     souscription.forEach(doc => {
           
-      Promise.all([LearnerService.getById(doc.learnerRef.id),SessionService.getById(doc.sessionRef.id)]).then(function(result,res){
+      Promise.all([LearnerService.getById(doc.learnerRef.id),SessionService.getById(doc.sessionRef.id)]).then(function(result){
 
           const combined = result.reduce((acc, result) => { 
                       return acc.concat(result)
                   }, []);
 
-                  const newItem = [ Object.assign({}, combined[0], combined[1])];
-                  console.log(newItem);
-                        setCustomersData
-                          (
-                            newItem
-                          )
+                  const newItem = Object.assign({}, combined[0], combined[1]);
+                  dataToShow.push(newItem);
+
             })
   
       })
     })
- }, []); 
-    
- 
-    useEffect(() => {
-      
+return dataToShow;
+}
+
+
+  useEffect(() => {
+
+    let result = fetchData();
+                  setCustomersData
+                  (
+                    result
+                  )
+
           if(learnerID){
             
-                console.log(learnerID);
                 LearnerService.getById(learnerID).then(function(learner){
                   setLearnerName(
                     learner
@@ -347,7 +351,7 @@ const [page, setPage] = React.useState(2);
                   <Grid container spacing={2} columns={16}>
                     <Grid item xs={100}>
                       <Item>
-                        <Typography variant='body2' align="center">Nombre d'inscrits : {customersData.length}</Typography>
+                        <Typography variant='body2' align="center">Nombre des souscriptions : {customersData.length}</Typography>
                       </Item>
                     </Grid>
                   </Grid>
