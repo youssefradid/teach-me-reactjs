@@ -3,7 +3,7 @@ import React, { useState, useEffect }  from 'react';
 import {ListItemIcon,Box,IconButton, ListItemText,ListItem,Button,Stack, List, Container, Grid,  Drawer, Table, TableFooter, TableHead, TableBody, TableRow, TableCell, Paper, Typography, Card, CardHeader, Avatar,  CardContent, } from "@mui/material";
 import PackService from "../services/PackService";
 import Delete from '@mui/icons-material/Delete';
-import UseFetch from "../services/useFetch";
+import fetchPacks from "../services/fetchPacks";
 import AlertDialog from "../modal/modalUpdatePack";
 import AddPackModal from "../modal/modalAddPack";
 import TableContainer from '@material-ui/core/TableContainer';
@@ -75,7 +75,7 @@ export default function Packs() {
   let history = useNavigate();
   const [formerName, setFormerName] = useState([]);
 
-  const [packsData] = UseFetch();
+  const [packsData] = fetchPacks();
   const classes = useStyles();
 
   const drawerWidth = 300;
