@@ -1,16 +1,14 @@
 import React, { useState }  from 'react';
 
 import { Alert, Modal,Box, Button, Paper, Stack, TextField, FormControl, InputLabel, Typography,Grid,Checkbox,FormGroup, Select, MenuItem } from "@mui/material";
-import{blue} from "@mui/material/colors";
 import { useNavigate } from "react-router";
 import LearnerService from "../services/LearnerService";
 import FormerService from "../services/FormerService";
 import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import './Style.css'
+import './Style.css';
 
 
 export default function RegisterForm() {

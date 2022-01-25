@@ -6,15 +6,13 @@ import PasswordRecoveryForm from './pages/PasswordRecoveryForm';
 import LandingPage from './pages/LandingPage';
 import SubscriptionPage from "./pages/SubscriptionPage";
 import Dashboard from "./pages/Dashboard";
-import Editepage from "./pages/NotFound";
+import NotFound from "./pages/NotFound";
 import Learners from "./pages/Learners";
 import Formers from "./pages/Formers";
 import Packs from "./pages/Packs";
 import Programs from "./pages/Programs";
 import Sessions from "./pages/Sessions";
 import Delete from "./pages/Delete";
-
-
 
 export default function App(){
 
@@ -35,7 +33,7 @@ export default function App(){
                 <Route path='/packs' element={<Packs/>}/>
                 <Route path='/programs' element={<Programs/>}/>
                 <Route path='/sessions' element={<Sessions/>}/>
-                <Route path="*" element={<Editepage />} />
+                <Route path="*" element={<NotFound />} />
             </Routes>
             </BrowserRouter>
     );
