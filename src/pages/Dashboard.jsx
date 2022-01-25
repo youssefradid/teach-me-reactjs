@@ -23,6 +23,8 @@ import Delete from '@mui/icons-material/Delete';
 import Create from '@mui/icons-material/Create';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import AccessibilityTwoTone from '@mui/icons-material/AccessibilityTwoTone';
+import './Style.css'
+import { red } from '@mui/material/colors';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -226,9 +228,9 @@ const [page, setPage] = React.useState(2);
 
   return (
     <Box sx={{ display: 'flex' }}>
-      <CssBaseline />
-      <AppBar position="fixed" open={open}>
-        <Toolbar>
+      <CssBaseline/>
+      <AppBar position="fixed" open={open} >
+        <Toolbar >
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -239,7 +241,7 @@ const [page, setPage] = React.useState(2);
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            Menu
+            Teach-Me
           </Typography>
         </Toolbar>
       </AppBar>

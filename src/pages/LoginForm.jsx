@@ -1,7 +1,6 @@
 import React, { useState }  from 'react';
 
 import { Alert, Modal,Box, Button, Paper, Stack, TextField, FormControl, InputLabel, Typography,Grid,Checkbox,FormGroup, Select, MenuItem } from "@mui/material";
-import Header from '../header/header';
 import{blue} from "@mui/material/colors";
 import { useNavigate } from "react-router";
 import LearnerService from "../services/LearnerService";
@@ -11,6 +10,8 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import './Style.css'
+
 
 export default function RegisterForm() {
 
@@ -98,63 +99,51 @@ export default function RegisterForm() {
     };
   
     return(
-        
-        <div>
-         <Header/>
-            <Grid
-                container 
-                justifyContent="center"
-                alignItems="flex-end"
-            >
-            <Paper sx={{ p: 2, margin: 20, maxWidth: 500, flexGrow: 1 }} elevation={5} >
-            
-              <Stack spacing={1} > 
-                                      
-                  <Typography color={blue[800]} variant='button'>Login Page</Typography>
+      <body>
+        <div class="row">
+          <div class="column">
+          <div class="logo" align="center">
+            <img align="center" src="logo.png" alt=""/>
+            <h2 align="center">Teach-me</h2>
+          </div>
+          </div>
+          <div class="column">
+          <div className="main">
+            <p className="sign" align="center">Connexion</p>
+            <form className="form1">
+              <input className="un " align="center" type="text" name="email" placeholder="Entrez votre Email" onChange={(e) => setUserEmail(e.target.value)} required></input>
+              {!CheckUserEmail ? <Alert  severity="error">Entrez votre Email ! </Alert> : <></> }
+              <input className="pass" align="center" type="password" name="password" placeholder="Entrez votre Mot de Passe " onChange={(e) => setUserPassword(e.target.value)} required></input>
+              {!CheckUserPassword ? <Alert  severity="error">Entrez votre mot de passe! </Alert> : <></> }
+              <select className="un" align="center" title="Vous êtes?" onChange={(e) => setUserIdentity(e.target.value)}>
+                <option className="un" align="center" checked>Vous êtes?</option>
+                <option className="un" align="center" value={"etud"}>Etudiant</option>
+                <option className="un" align="center" value={"form"}>Formateur</option>
+              </select>
+              {!CheckUserIdentity ? <Alert  severity="error">Vous étes Qui?</Alert> : <></> }
 
-                  <TextField label="Email" variant="outlined" helperText="Tappez ici Votre Email" onChange={(e) => setUserEmail(e.target.value)} required /> 
-                  {!CheckUserEmail ? <Alert  severity="error">Entrez votre Email ! </Alert> : <></> }
-                  <TextField type="password" label="Password" variant="outlined" helperText="Tappez ici Votre mot de passe" onChange={(e) => setUserPassword(e.target.value)} required/>
-                  {!CheckUserPassword ? <Alert  severity="error">Entrez votre mot de passe! </Alert> : <></> }
-                  <FormControl fullWidth>
-                  <InputLabel id="demo-simple-select-label">Vous etes ?</InputLabel>
-                  <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    label="Age"
-                    onChange={(e) => setUserIdentity(e.target.value)}
-                  >
-                    <MenuItem value={"etud"}>Etudiant</MenuItem>
-                    <MenuItem value={"form"}>Formateur</MenuItem>
-                  </Select>
-                  {!CheckUserIdentity ? <Alert  severity="error">Vous étes Qui?</Alert> : <></> }
-                  
-                </FormControl>    
-              </Stack> 
-              <br/>    
-                  <Stack spacing={3} direction={'row'} justifyContent="center">
-                          <Button variant="contained" onClick={submit}>Se connecter</Button>
-                          <Button variant="contained" onClick={gotoRegister} color="primary">Inscription</Button>
-                  </Stack>
-            </Paper>
-          
-         </Grid>
-         <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">
-          {"Utilisateur n'existe pas !!"}
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-
-          </DialogContentText>
-        </DialogContent>
-        </Dialog>
+              <c className="submit" align="center" onClick={submit}>Se connecter</c>
+              <div><br/></div>
+              <div align="center">ou</div>
+              <c class="forgot" align="center" onClick={gotoRegister}>Créer un compte</c>
+              <div><br/></div>
+            </form>
+          </div>
+          </div>
         </div>
-       
+          <Dialog
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+          >
+          <DialogTitle id="alert-dialog-title">
+            {"Utilisateur n'existe pas !!"}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description"></DialogContentText>
+          </DialogContent>
+          </Dialog>
+        </body>         
     );
 }
