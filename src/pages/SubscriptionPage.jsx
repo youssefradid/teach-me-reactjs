@@ -6,7 +6,7 @@ import { getFirestore, doc } from "firebase/firestore";
 import PackService from "../services/PackService";
 import ProgramService from "../services/ProgramService";
 import SouscriptionService from "../services/SouscriptionService";
-import SessionService from "../services/service";
+import SessionService from "../services/SessionService";
 import { Navigate } from 'react-router-dom';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';

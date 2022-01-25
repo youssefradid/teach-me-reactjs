@@ -1,7 +1,7 @@
 import React, { useState, useEffect }  from 'react';
 
 import {ListItemText,ListItem,Drawer, ListItemIcon, List, Box,IconButton, Container, Grid, Table, TableFooter, TableHead, TableBody, TableRow, TableCell, Paper, Typography } from "@mui/material";
-import SessionService from "../services/service";
+import SessionService from "../services/SessionService";
 import ProgramService from "../services/ProgramService";
 import Delete from '@mui/icons-material/Delete';
 

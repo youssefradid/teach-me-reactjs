@@ -4,7 +4,7 @@ import { Button, Paper, Stack, TextField,Grid, Typography,RadioGroup, FormContro
 
 import{blue, grey} from "@mui/material/colors";
 import SaveIcon from '@mui/icons-material/Save';
-import SessionService from "../services/service";
+import SessionService from "../services/SessionService";
 import ProgramService from "../services/ProgramService";
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';

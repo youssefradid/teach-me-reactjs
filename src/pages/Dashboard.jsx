@@ -5,7 +5,7 @@ import { ListItemIcon, Box, IconButton, ListItemText, ListItem, Button, List, Co
 import { Navigate } from 'react-router-dom';
 import TableContainer from '@material-ui/core/TableContainer';
 import SouscriptionService from "../services/SouscriptionService";
-import SessionService from "../services/service";
+import SessionService from "../services/SessionService";
 import ProgramService from "../services/ProgramService";
 import LearnerService from "../services/LearnerService";
 import FormerService from "../services/FormerService";
