@@ -40,6 +40,17 @@ export default function RegisterForm() {
       setOpen(false);
     };
 
+    const gotoDash = function(){
+      history('/dashboard');
+    };
+    
+    const gotoSub = function(){
+      history('/subcription-Page');
+    };
+      const gotoRegister = function(){
+        history('/register-from');
+      };
+
     const submit = (e) => {
       if(UserEmail.length>0 && UserPassword.length>0){
         setCheckUserPassword(true);
@@ -52,7 +63,7 @@ export default function RegisterForm() {
 
                   if(learner.email == UserEmail && learner.password == UserPassword){
                     window.sessionStorage.setItem("learner", learner.id);
-                    gotoDash();
+                    gotoSub();
                   }
                   else{
                     handleClickOpen();
@@ -90,13 +101,7 @@ export default function RegisterForm() {
       }
   }
 
-  const gotoDash = function(){
-    history('/dashboard');
-  };
   
-    const gotoRegister = function(){
-      history('/register-from');
-    };
   
     return(
       <body>

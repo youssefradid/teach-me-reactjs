@@ -12,7 +12,7 @@ class LearnerService {
     let dataToShow = [];
     const Alldocs = await getDocs(db) 
     Alldocs.forEach((doc) => {
-      const { firstname, lastname, email, specialisation, password } = doc.data();
+      const { firstname, lastname, email, specialisation, password , cv} = doc.data();
           dataToShow.push(
             {
               "id" : doc.id,
@@ -20,6 +20,7 @@ class LearnerService {
               "lastname": lastname,
               "email": email,
               "specialisation": specialisation,
+              "cv" : cv,
               "password" : password
             }
           )
@@ -32,7 +33,7 @@ class LearnerService {
   const docRef = doc(db, id.trim());
   const docSnap = await getDoc(docRef);
 
-    const { firstname, lastname, email, specialisation, password } = docSnap.data();
+    const { firstname, lastname, email, specialisation, password , cv} = docSnap.data();
     dataToShow = [
       {
         "id" : docSnap.id,
@@ -40,23 +41,25 @@ class LearnerService {
         "lastname": lastname,
         "email": email,
         "specialisation": specialisation,
+        "cv": cv,
         "password" : password
       }
     ];
   return dataToShow;
 }
 
-  create = async (tutorial) => {
-    return  await addDoc(db, tutorial);
+  create = async (former) => {
+    return  await addDoc(db, former);
   }
 
-  update = async (tutorial,id) => {
+  update = async (former,id) => {
     const washingtonRef = doc(database, "Former", id);
     return await updateDoc(washingtonRef, {
-        firstname: tutorial.firstname,
-        lastname: tutorial.lastname,
-        email: tutorial.email,
-        specialisation : tutorial.specialisation
+        firstname: former.firstname,
+        lastname: former.lastname,
+        email: former.email,
+        specialisation : former.specialisation,
+        cv : former.cv
       });
   }
 

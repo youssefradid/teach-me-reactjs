@@ -8,6 +8,11 @@ import ProgramService from "../services/ProgramService";
 import SouscriptionService from "../services/SouscriptionService";
 import SessionService from "../services/service";
 import { Navigate } from 'react-router-dom';
+import Dialog from '@mui/material/Dialog';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import LearnerService from "../services/LearnerService";
 
 export default function SubscriptionPage() {
 
@@ -20,6 +25,16 @@ export default function SubscriptionPage() {
   const [checkedValue, setChecked] = useState([]);
   const [sessionId, setSessionId] = useState([]);
   const learnerID = window.sessionStorage.getItem("learner");
+  const [open, setOpen] = useState(false);
+  const [learnerName, setLearnerName] = useState([]);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
 const nextStep = function(event){ 
 
@@ -63,6 +78,7 @@ const nextStep = function(event){
       };
 
       SouscriptionService.create(souscription);
+      handleClickOpen();
     }else{
       let souscription = {
         "learnerRef" : doc(getFirestore(), 'Leaner/' + learnerID),
@@ -72,6 +88,7 @@ const nextStep = function(event){
       };
 
       SouscriptionService.create(souscription);
+      handleClickOpen();
     }
   }
 }
@@ -80,6 +97,16 @@ setCurrentStep(currentStep +1);
 }
 
 const goBack = function(event){  setCurrentStep(currentStep -1);   }
+
+if(learnerID){
+            
+  LearnerService.getById(learnerID).then(function(learner){
+    setLearnerName(
+      learner
+    )
+    
+  })
+}
 
   PackService.getAll().then(function(pack) {  
     setPackData
@@ -95,7 +122,18 @@ const goBack = function(event){  setCurrentStep(currentStep -1);   }
   }
 
     return(
+
+      
       <Container maxWidth={'md'}>
+        <Typography variant="h3" component="h2">
+                Bienvenue 
+                {
+                              learnerName && learnerName.map((f) => (
+                                " "+f.firstname + " " + f.lastname
+                                ))
+
+                        }
+        </Typography>
                   <Stepper activeStep={currentStep} orientation="vertical">
 
                    
@@ -164,7 +202,7 @@ const goBack = function(event){  setCurrentStep(currentStep -1);   }
                               "Session"
                           </StepLabel>
                           <StepContent>
-                            <Typography>Merci de saisir vos information personnelles pour ...</Typography>
+                            <Typography>Merci de choisir la session...</Typography>
                             
                             <Stack spacing={2} direction={'column'}>
                               
@@ -177,7 +215,7 @@ const goBack = function(event){  setCurrentStep(currentStep -1);   }
                                     >
                                     {
                                           sessionData.map(function(item){
-                                            return(<MenuItem value={item.id}>{item.startDate}</MenuItem>);
+                                            return(<MenuItem value={item.id}>{item.startDate} jusqu'au {item.endDate}</MenuItem>);
                                           })
                                     }
 
@@ -224,6 +262,24 @@ const goBack = function(event){  setCurrentStep(currentStep -1);   }
 
                   </Stepper>
 
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Inscription avec succès !"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+
+          </DialogContentText>
+        </DialogContent>
+        </Dialog>
+
         </Container>
+
+        
     );
 }

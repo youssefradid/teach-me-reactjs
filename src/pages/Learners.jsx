@@ -84,7 +84,7 @@ export default function Learners() {
                 </Typography>
               </Box>
               <Box>
-              <AddModel />
+              {!window.sessionStorage.getItem("former") ?  <AddModel /> : <></> }
               </Box>
             </Box>
   

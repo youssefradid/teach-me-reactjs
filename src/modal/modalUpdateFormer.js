@@ -48,7 +48,7 @@ export default function AlertDialog({parentToChild})  {
   const [UserLastname, setUserLastname] = useState(parentToChild.lastname);
   const [UserEmail, setUserEmail] = useState(parentToChild.email);
   const [Userspecialisation, setUserspecialisation] = useState(parentToChild.specialisation);
-
+  const [UserCV, setUserCV] = useState(parentToChild.cv);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -63,7 +63,8 @@ export default function AlertDialog({parentToChild})  {
       "firstname" : UserName,
       "lastname" : UserLastname,
       "email" : UserEmail,
-      "specialisation" : Userspecialisation
+      "specialisation" : Userspecialisation,
+      "cv" : UserCV
     };
 
     FormerService.update(former,id);
@@ -85,7 +86,7 @@ export default function AlertDialog({parentToChild})  {
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">
-          {"Modifier le formatteur"}
+          {"Modifier le formateur"}
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description"></DialogContentText>
@@ -93,7 +94,7 @@ export default function AlertDialog({parentToChild})  {
 
         <Container maxWidth="xs">
           <div className={classes.paper}>
-            <form className={classes.form} onSubmit={() => updateLearner(parentToChild.id)}>
+            <form className={classes.form}>
               <Grid container justifyContent="center" spacing={2}>
                 <Grid item xs={12} sm={6}>
                   <TextField
@@ -140,14 +141,25 @@ export default function AlertDialog({parentToChild})  {
                   onChange={(e) => setUserspecialisation(e.target.value)}
                   />
                 </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="specialisation"
+                  label="CV"
+                  value={UserCV} 
+                  onChange={(e) => setUserCV(e.target.value)}
+                  />
+                </Grid>
               </Grid>
               <br/>
               <Button
-                type="submit"
                 fullWidth
                 variant="contained"
                 color="primary"
                 className={classes.submit}
+                onClick={() => updateLearner(parentToChild.id)}
               >
               
                 Enregistrer
