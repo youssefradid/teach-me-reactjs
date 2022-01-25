@@ -1,6 +1,6 @@
 import React, { useState, useEffect }  from 'react';
 
-import { Button, Paper, Stack, TextField,Grid, Typography,RadioGroup, FormControlLabel, FormLabel,Checkbox,FormGroup, Select, MenuItem } from "@mui/material";
+import { Alert, Button, Paper, Stack, TextField,Grid, Typography,RadioGroup, FormControlLabel, FormLabel,Checkbox,FormGroup, Select, MenuItem } from "@mui/material";
 import { getFirestore, doc, onSnapshot, collection, query, where } from "firebase/firestore";
 import{blue, grey} from "@mui/material/colors";
 import { useNavigate } from "react-router";
@@ -14,10 +14,15 @@ export default function RegisterForm() {
   
   let history = useNavigate();
   const [UserName, setUserName] = useState("");
+  const [CheckUserName, setCheckUserName] = useState(true);
   const [UserLastname, setUserLastname] = useState("");
+  const [CheckUserLastname, setCheckUserLastname] = useState(true);
   const [UserEmail, setUserEmail] = useState("");
+  const [CheckUserEmail, setCheckUserEmail] = useState(true);
   const [UserPassword, setUserPassword] = useState("");
+  const [CheckUserPassword, setCheckUserPassword] = useState(true);
   const [UserPhone, setUserPhone] = useState("");
+  const [CheckUserPhone, setCheckUserPhone] = useState(true);
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -31,25 +36,91 @@ export default function RegisterForm() {
 
 
   const submit = (e) => {
-   
-    let data = {
-      firstname: UserName,
-      lastname: UserLastname,
-      password : UserEmail,
-      email : UserPassword,
-      phone : UserPhone
-    }
-
-    LearnerService.create(data)
-    .then(() => {
-      //@todo : alerting
-      handleClickOpen();
-      console.log("Created new item successfully!");
       
-    })
-    .catch((e) => {
-      console.log(e);
-    });
+        if(!UserName.length>0 ){
+
+          setCheckUserName(false);
+
+      setCheckUserLastname(true);
+      setCheckUserEmail(true);
+      setCheckUserPassword(true);
+      setCheckUserPhone(true);
+
+          
+        }
+        
+        else if(!UserLastname.length>0 ){
+          
+          setCheckUserLastname(false);
+
+      setCheckUserName(true);
+      setCheckUserEmail(true);
+      setCheckUserPassword(true);
+      setCheckUserPhone(true);
+          
+        }
+
+        else if(!UserEmail.length>0 ){
+          
+          setCheckUserEmail(false);
+
+          setCheckUserName(true);
+          setCheckUserLastname(true);
+          setCheckUserPassword(true);
+          setCheckUserPhone(true);
+
+
+          
+        }
+
+        else if(!UserPassword.length>0 ){
+          
+          setCheckUserPassword(false);
+
+
+          setCheckUserName(true);
+          setCheckUserLastname(true);
+          setCheckUserPhone(true);
+          setCheckUserEmail(true);
+          
+        }
+
+        else if(!UserPhone.length>0 ){
+          
+          setCheckUserPhone(false);
+
+      setCheckUserName(true);
+      setCheckUserEmail(true);
+      setCheckUserPassword(true);
+
+          
+        }
+
+    else{
+      setCheckUserName(true);
+      setCheckUserLastname(true);
+      setCheckUserEmail(true);
+      setCheckUserPassword(true);
+      setCheckUserPhone(true);
+        let data = {
+          firstname: UserName,
+          lastname: UserLastname,
+          password : UserEmail,
+          email : UserPassword,
+          phone : UserPhone
+        }
+
+        LearnerService.create(data)
+        .then(() => {
+          //@todo : alerting
+          handleClickOpen();
+          console.log("Created new item successfully!");
+          
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+      }
 }
 
 
@@ -97,10 +168,15 @@ export default function RegisterForm() {
             <p className="sign" align="center">Créer un compte</p>
             <form className="form1">
               <input className="un " align="center" type="text" name="Nom" placeholder="Entrer votre Nom" onChange={(e) => setUserName(e.target.value)}></input>
+              {!CheckUserName ? <Alert  align="center" severity="error">Entrez votre nom! </Alert> : <></> }
               <input className="un " align="center" type="text" name="Prénom" placeholder="Entrer votre Prénom" onChange={(e) =>setUserLastname(e.target.value)}></input>
+              {!CheckUserLastname ? <Alert  align="center" severity="error">Entrez votre prénom! </Alert> : <></> }
               <input className="un " align="center" type="text" name="email" placeholder="Entrer votre Email" onChange={(e) => setUserEmail(e.target.value)}></input>
+              {!CheckUserEmail ? <Alert  align="center" severity="error">Entrez votre email! </Alert> : <></> }
               <input className="pass" align="center" type="password" name="password" placeholder="Entrer votre Mot de Passe " onChange={(e) => setUserPassword(e.target.value)}></input>
+              {!CheckUserPassword ? <Alert  align="center" severity="error">Entrez votre mot de passe! </Alert> : <></> }
               <input className="un" align="center" type="text" name="phone" placeholder="Entrer votre téléphone " onChange={(e) => setUserPhone(e.target.value)}></input>
+              {!CheckUserPhone ? <Alert  align="center" severity="error">Entrez votre téléphone! </Alert> : <></> }
               <div class="row">
                 <div class="column">
                   <c className="submit" align="center" onClick={submit} >S'inscrire</c>
