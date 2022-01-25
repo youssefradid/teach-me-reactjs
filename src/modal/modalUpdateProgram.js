@@ -68,9 +68,12 @@ export default function AlertDialog({parentToChild})  {
             <Stack spacing={1}>    
                 <Typography color={blue[800]} variant='button'>Modifier un programme</Typography>
                 <Typography color={grey[500]} variant='body1'>Vous devez remplir tous les champs obligatoires. </Typography>
-                <TextField value={Title} variant="outlined" helperText="Tappez ici Votre Nom" onChange={(e) => setTitle(e.target.value)}/>
-                <TextField value={Description} variant="outlined" helperText="Tappez ici Votre Prenom" onChange={(e) => setDescription(e.target.value)}/>
-                <TextField value={Goal} variant="outlined" helperText="Tappez ici Votre Email" onChange={(e) => setGoal(e.target.value)}/>
+                <TextField value={Title} variant="outlined" helperText="Title" onChange={(e) => setTitle(e.target.value)}/>
+                <TextField value={Description} variant="outlined" helperText="Description " onChange={(e) => setDescription(e.target.value)}/>
+                <TextField 
+                  multiline
+                  rows={2}
+                  maxRows={4} value={Goal} variant="outlined" helperText="But" onChange={(e) => setGoal(e.target.value)}/>
             </Stack> 
            
          <Stack sx={{margin: 3}} spacing={2} direction={'row'} justifyContent="center">

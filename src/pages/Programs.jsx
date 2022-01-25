@@ -84,7 +84,7 @@ export default function Packs() {
           <Box display="flex">
             <Box flexGrow={1}>
               <Typography component="h2" variant="h6" color="primary" gutterBottom>
-                Packs
+                Programmes
                 </Typography>
               </Box>
               <Box>

@@ -4,7 +4,11 @@ import { Button, Paper, Stack, TextField,Grid, Typography,RadioGroup, FormContro
 import { getFirestore, doc, onSnapshot, collection, query, where } from "firebase/firestore";
 import{blue, grey} from "@mui/material/colors";
 import { useNavigate } from "react-router";
-import FormerService from "../services/FormerService";
+import LearnerService from "../services/LearnerService";
+import Dialog from '@mui/material/Dialog';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 
 export default function RegisterForm() {
   
@@ -13,20 +17,35 @@ export default function RegisterForm() {
   const [UserLastname, setUserLastname] = useState("");
   const [UserEmail, setUserEmail] = useState("");
   const [UserPassword, setUserPassword] = useState("");
+  const [UserPhone, setUserPhone] = useState("");
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+    history('/');
+  };
+
 
   const submit = (e) => {
+   
     let data = {
       firstname: UserName,
       lastname: UserLastname,
       password : UserEmail,
       email : UserPassword,
+      phone : UserPhone
     }
 
-    FormerService.create(data)
+    LearnerService.create(data)
     .then(() => {
       //@todo : alerting
+      handleClickOpen();
       console.log("Created new item successfully!");
-      history('/');
+      
     })
     .catch((e) => {
       console.log(e);
@@ -57,7 +76,7 @@ export default function RegisterForm() {
           <div class="digi">
 
             <p class="intro"  >
-                Digiforma est un logiciel complet de gestion 
+                Teach-Me est un logiciel complet de gestion 
             </p>
             <p class="intro"  >
                  de centre de formation
@@ -81,6 +100,7 @@ export default function RegisterForm() {
               <input className="un " align="center" type="text" name="Prénom" placeholder="Entrer votre Prénom" onChange={(e) =>setUserLastname(e.target.value)}></input>
               <input className="un " align="center" type="text" name="email" placeholder="Entrer votre Email" onChange={(e) => setUserEmail(e.target.value)}></input>
               <input className="pass" align="center" type="password" name="password" placeholder="Entrer votre Mot de Passe " onChange={(e) => setUserPassword(e.target.value)}></input>
+              <input className="un" align="center" type="text" name="phone" placeholder="Entrer votre téléphone " onChange={(e) => setUserPhone(e.target.value)}></input>
               <div class="row">
                 <div class="column">
                   <c className="submit" align="center" onClick={submit} >S'inscrire</c>
@@ -93,6 +113,19 @@ export default function RegisterForm() {
           </div>
         </div>
       </div>
+      <Dialog
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+          >
+          <DialogTitle id="alert-dialog-title">
+            {"Utilisateur ajouté !!"}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description"></DialogContentText>
+          </DialogContent>
+          </Dialog>
     </body>
     );
 }

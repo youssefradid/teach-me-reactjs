@@ -23,9 +23,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import Delete from '@mui/icons-material/Delete';
 import Create from '@mui/icons-material/Create';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
-import AccessibilityTwoTone from '@mui/icons-material/AccessibilityTwoTone';
 import './Style.css'
-import { red } from '@mui/material/colors';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -130,10 +128,6 @@ return dataToShow;
 }
 
 
-    
-
-    
-    
 const drawerWidth = 300;
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
@@ -212,11 +206,42 @@ const [page, setPage] = React.useState(2);
  
   useEffect( () => {
 
-    const result =  fetchData();
-                  setCustomersData
+    let dataToShow = [];
+  SouscriptionService.getAll().then(function(souscription) {
+
+    souscription.forEach(doc => {
+          
+       Promise.all([LearnerService.getById(doc.learnerRef.id),SessionService.getById(doc.sessionRef.id)]).then(function(result){
+
+          const combined = result.reduce((acc, result) => { 
+                      return acc.concat(result)
+                  }, []);
+
+
+                  const newItem = Object.assign({}, combined[0], combined[1]);
+
+                  ProgramService.getAll().then(function(program){
+                    program.forEach(prog => {
+
+                    if(prog.id === newItem.programRef.id){
+                      dataToShow.push({...newItem, ...prog});
+                      
+                    }
+                    setCustomersData
                   (
-                    result
+                    dataToShow
                   )
+                  })
+                  })
+
+                  
+
+            })
+  
+      })
+    })
+
+                  
 
           
            if(formerID){
@@ -335,7 +360,7 @@ if ( formerID == null ) {
               </TableRow>
             </TableHead>
            <TableBody>
-           {
+                      {
                   customersData.map((user) => (
                             <TableRow key={user.ID}>
                             <TableCell align="center">{user.lastname}</TableCell>
@@ -348,7 +373,6 @@ if ( formerID == null ) {
                          
                           </TableRow>
           
-        
                           ))
                         }
 

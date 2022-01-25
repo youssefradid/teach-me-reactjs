@@ -28,7 +28,7 @@ function Line(props){
     
       <TableRow>
         <TableCell align="center">{props.element.label}</TableCell>
-          <TableCell align="center">{props.element.price}</TableCell>
+          <TableCell align="center">{props.element.price} DH</TableCell>
           <TableCell align="center">{props.element.title}</TableCell>
           <TableCell align="center">
           <AlertDialog parentToChild={props.element}/>
@@ -243,7 +243,7 @@ export default function Packs() {
         <Box display="flex">
           <Box flexGrow={1}>
             <Typography component="h2" variant="h6" color="primary" gutterBottom>
-              Apprenants
+              PACKS
               </Typography>
             </Box>
           </Box>
