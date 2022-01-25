@@ -106,7 +106,7 @@ export default function RegisterForm() {
         <div class="row">
           <div class="column">
           <div class="logo" align="center">
-            <img align="center" src="logo.png" alt=""/>
+            <img className='image' align="center" src="logo.png" alt=""/>
             <h2 align="center">Teach-me</h2>
           </div>
           </div>
@@ -115,15 +115,15 @@ export default function RegisterForm() {
             <p className="sign" align="center">Connexion</p>
             <form className="form1">
               <input className="un " align="center" type="text" name="email" placeholder="Entrez votre Email" onChange={(e) => setUserEmail(e.target.value)} required></input>
-              {!CheckUserEmail ? <Alert  severity="error">Entrez votre Email ! </Alert> : <></> }
+              {!CheckUserEmail ? <Alert align="center" severity="error">Entrez votre Email ! </Alert> : <></> }
               <input className="pass" align="center" type="password" name="password" placeholder="Entrez votre Mot de Passe " onChange={(e) => setUserPassword(e.target.value)} required></input>
-              {!CheckUserPassword ? <Alert  severity="error">Entrez votre mot de passe! </Alert> : <></> }
+              {!CheckUserPassword ? <Alert  align="center" severity="error">Entrez votre mot de passe! </Alert> : <></> }
               <select className="un" align="center" title="Vous êtes?" onChange={(e) => setUserIdentity(e.target.value)}>
                 <option className="un" align="center" checked>Vous êtes?</option>
                 <option className="un" align="center" value={"etud"}>Etudiant</option>
                 <option className="un" align="center" value={"form"}>Formateur</option>
               </select>
-              {!CheckUserIdentity ? <Alert  severity="error">Vous étes Qui?</Alert> : <></> }
+              {!CheckUserIdentity ? <Alert  align="center" severity="error">Vous étes Qui?</Alert> : <></> }
 
               <c className="submit" align="center" onClick={submit}>Se connecter</c>
               <div><br/></div>

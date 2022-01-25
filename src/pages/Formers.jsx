@@ -1,6 +1,6 @@
 import React, { useState }  from 'react';
 
-import {Box,IconButton, Container, Grid,Link ,Table, TableFooter, TableHead, TableBody, TableRow, TableCell, Paper, Typography } from "@mui/material";
+import {ListItemText,ListItem,Drawer, ListItemIcon, List, Box,IconButton, Container, Grid,Link ,Table, TableFooter, TableHead, TableBody, TableRow, TableCell, Paper, Typography } from "@mui/material";
 import FormerService from "../services/FormerService";
 import {useNavigate} from 'react-router';
 import AlertDialog from "../modal/modalUpdateFormer";
@@ -14,6 +14,13 @@ import MuiAppBar from '@mui/material/AppBar';
 import Delete from '@mui/icons-material/Delete';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 
+import { CssBaseline } from '@mui/material';
+import Toolbar from '@mui/material/Toolbar';
+import Divider from '@mui/material/Divider';
+import MenuIcon from '@mui/icons-material/Menu';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import LogoutIcon from '@mui/icons-material/Logout';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -42,9 +49,11 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
+
 export default function Formers() {
   
     const classes = useStyles();
+    let history = useNavigate();
 
       const [formersData, setFormersData] = useState([]); 
 
@@ -127,9 +136,91 @@ export default function Formers() {
       const deleteFormer = function(id){
         FormerService.delete(id);
       };
+      var listItemText = { 'Gestion des apprenants' : "/learners", 'Gestion des formateurs' : "/formers", 'Gestion des programmes' : "/programs", 'Gestion des sessions' : "/sessions", "Gestion des packs" : "/packs"};
 
+      var listItemTextUnderDivider = { 'Logout' : "/"};
+      
+      const [formerName, setFormerName] = useState([]);
+      
+      const learnerID = window.sessionStorage.getItem("learner");
+      const formerID = window.sessionStorage.getItem("former");
+      
+              
+      
+      
     return(
-        
+      <Box sx={{ display: 'flex' }}>
+      <CssBaseline/>
+      <AppBar position="fixed" open={open} >
+        <Toolbar >
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={handleDrawerOpen}
+            edge="start"
+            sx={{ mr: 2, ...(open && { display: 'none' }) }}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" noWrap component="div">
+            Teach-Me
+          </Typography>
+        </Toolbar>
+      </AppBar>
+      <Drawer
+        sx={{
+          width: drawerWidth,
+          flexShrink: 0,
+          '& .MuiDrawer-paper': {
+            width: drawerWidth,
+            boxSizing: 'border-box',
+          },
+        }}
+        variant="persistent"
+        anchor="left"
+        open={open}
+      >
+        <DrawerHeader>
+        <Typography variant="h5" gutterBottom component="div" style={{color:"#00adb5"}} >
+       Bienvenue
+                
+                    {
+                      formerName && formerName.map((f) => (
+                        " "+f.firstname + " " + f.lastname
+                        ))
+
+                }
+      </Typography>
+          <IconButton onClick={handleDrawerClose}>
+         
+            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+          </IconButton>
+         
+        </DrawerHeader>
+        <Divider />
+        <List>
+        {Object.keys(listItemText).map((key, index) => (
+            <ListItem button onClick={() => history(listItemText[key])}>
+              
+              <ListItemText primary={key} />
+            </ListItem>
+          ))}
+        </List>
+        <Divider />
+        <List>
+        {Object.keys(listItemTextUnderDivider).map((key, index) => (
+            <ListItem button  onClick={() => history(listItemTextUnderDivider[key])}>
+              <ListItemIcon>
+                {index % 2 === 0 ? <LogoutIcon /> : <LogoutIcon />}
+              </ListItemIcon>
+              <ListItemText primary={key} />
+            </ListItem>
+          ))}
+        </List>
+      </Drawer>
+      <Main open={open}>
+        <DrawerHeader />
+      
         
       <Container className={classes.container} maxWidth="lg">
         <Paper className={classes.paper}>
@@ -209,7 +300,8 @@ export default function Formers() {
                 </Paper>
         </Container>
       
-        
+        </Main>
+        </Box>
     );
 }
 
