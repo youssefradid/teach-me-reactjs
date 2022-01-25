@@ -57,7 +57,7 @@ export default function AddModel() {
     <div>
       <Stack  direction="column" justifyContent="flex-start" alignItems="stretch" spacing={2}  >
           <Button variant="contained" onClick={handleClickOpen}>
-            <AddIcon/> Add pack
+            <AddIcon/> Ajouter un pack
           </Button>
       </Stack>
       

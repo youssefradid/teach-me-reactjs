@@ -237,14 +237,17 @@ export default function Packs() {
         <DrawerHeader />
       
     <Container className={classes.container} maxWidth="lg">
-    <AddPackModal />
+    
 
       <Paper className={classes.paper}>
         <Box display="flex">
           <Box flexGrow={1}>
             <Typography component="h2" variant="h6" color="primary" gutterBottom>
-              Apprenants
+              Packs
               </Typography>
+              </Box>
+              <Box>
+              <AddPackModal />
             </Box>
           </Box>
 

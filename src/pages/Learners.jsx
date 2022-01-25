@@ -1,17 +1,25 @@
 import React, { useState }  from 'react';
 
-import {Box,IconButton, Container, Grid, Table, TableFooter, TableHead, TableBody, TableRow, TableCell, Paper, Typography } from "@mui/material";
+import {ListItemText,ListItem,Drawer, ListItemIcon, List, Box,IconButton, Container, Grid, Table, TableFooter, TableHead, TableBody, TableRow, TableCell, Paper, Typography } from "@mui/material";
 import LearnerService from "../services/LearnerService";
 import Delete from '@mui/icons-material/Delete';
 import {useNavigate} from 'react-router';
 
-import { styled, makeStyles } from '@material-ui/core/styles';
+import { styled, useTheme, makeStyles } from '@material-ui/core/styles';
 import AddModel from "../modal/modalAddLearner";
 import TableContainer from '@material-ui/core/TableContainer';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import TablePagination from '@mui/material/TablePagination';
-
 import AlertDialog from "../modal/modalUpdateLearner";
+
+import { CssBaseline } from '@mui/material';
+import MuiAppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import Divider from '@mui/material/Divider';
+import MenuIcon from '@mui/icons-material/Menu';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -72,10 +80,147 @@ export default function Learners() {
       setPage(0);
     };
 
+    const AppBar = styled(MuiAppBar, {
+      shouldForwardProp: (prop) => prop !== 'open',
+      })(({ theme, open }) => ({
+      transition: theme.transitions.create(['margin', 'width'], {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen,
+      }),
+      ...(open && {
+        width: `calc(100% - ${drawerWidth}px)`,
+        marginLeft: `${drawerWidth}px`,
+        transition: theme.transitions.create(['margin', 'width'], {
+          easing: theme.transitions.easing.easeOut,
+          duration: theme.transitions.duration.enteringScreen,
+        }),
+      }),
+      }));
+      
+      const DrawerHeader = styled('div')(({ theme }) => ({
+      display: 'flex',
+      alignItems: 'center',
+      padding: theme.spacing(0, 1),
+      // necessary for content to be below app bar
+      ...theme.mixins.toolbar,
+      justifyContent: 'flex-end',
+      }));
+      const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
+        ({ theme, open }) => ({
+          flexGrow: 1,
+          padding: theme.spacing(3),
+          transition: theme.transitions.create('margin', {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.leavingScreen,
+          }),
+          marginLeft: `-${drawerWidth}px`,
+          ...(open && {
+            transition: theme.transitions.create('margin', {
+              easing: theme.transitions.easing.easeOut,
+              duration: theme.transitions.duration.enteringScreen,
+            }),
+            marginLeft: 0,
+          }),
+        }),
+        );
+        const [open, setOpen] = React.useState(false);
+
+const handleDrawerOpen = () => {
+  setOpen(true);
+};
+
+const handleDrawerClose = () => {
+  setOpen(false);
+};
+
+var listItemText = { 'Gestion des apprenants' : "/learners", 'Gestion des formateurs' : "/formers", 'Gestion des programmes' : "/programs", 'Gestion des sessions' : "/sessions", "Gestion des packs" : "/packs"};
+
+var listItemTextUnderDivider = { 'Logout' : "/"};
+
+const [formerName, setFormerName] = useState([]);
+
+const learnerID = window.sessionStorage.getItem("learner");
+const formerID = window.sessionStorage.getItem("former");
+const theme = useTheme();
+const drawerWidth = 300;
+var listItemText = { 'Gestion des apprenants' : "/learners", 'Gestion des formateurs' : "/formers", 'Gestion des programmes' : "/programs", 'Gestion des sessions' : "/sessions", "Gestion des packs" : "/packs"};
+
+        
+
 
     return(
+      <Box sx={{ display: 'flex' }}>
+      <CssBaseline/>
+      <AppBar position="fixed" open={open} >
+        <Toolbar >
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={handleDrawerOpen}
+            edge="start"
+            sx={{ mr: 2, ...(open && { display: 'none' }) }}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" noWrap component="div">
+            Teach-Me
+          </Typography>
+        </Toolbar>
+      </AppBar>
+      <Drawer
+        sx={{
+          width: drawerWidth,
+          flexShrink: 0,
+          '& .MuiDrawer-paper': {
+            width: drawerWidth,
+            boxSizing: 'border-box',
+          },
+        }}
+        variant="persistent"
+        anchor="left"
+        open={open}
+      >
+        <DrawerHeader>
+        <Typography variant="h5" gutterBottom component="div" style={{color:"#00adb5"}} >
+       Bienvenue
+                
+                    {
+                      formerName && formerName.map((f) => (
+                        " "+f.firstname + " " + f.lastname
+                        ))
 
-      <Container className={classes.container} maxWidth="lg">
+                }
+      </Typography>
+          <IconButton onClick={handleDrawerClose}>
+         
+            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+          </IconButton>
+         
+        </DrawerHeader>
+        <Divider />
+        <List>
+        {Object.keys(listItemText).map((key, index) => (
+            <ListItem button onClick={() => history(listItemText[key])}>
+              
+              <ListItemText primary={key} />
+            </ListItem>
+          ))}
+        </List>
+        <Divider />
+        <List>
+        {Object.keys(listItemTextUnderDivider).map((key, index) => (
+            <ListItem button  onClick={() => history(listItemTextUnderDivider[key])}>
+              <ListItemIcon>
+                {index % 2 === 0 ? <LogoutIcon /> : <LogoutIcon />}
+              </ListItemIcon>
+              <ListItemText primary={key} />
+            </ListItem>
+          ))}
+        </List>
+      </Drawer>
+      <Main open={open}>
+        <DrawerHeader />
+            <Container className={classes.container} maxWidth="lg">
         <Paper className={classes.paper}>
           <Box display="flex">
             <Box flexGrow={1}>
@@ -149,7 +294,8 @@ export default function Learners() {
                     </Grid>
                 </Paper>
         </Container>
-        
+        </Main>
+      </Box>
     );
 }
 

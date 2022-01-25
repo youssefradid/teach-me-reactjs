@@ -1,6 +1,6 @@
 import React, { useState, useEffect }  from 'react';
 
-import { Button, Paper, Stack, TextField,Grid, Typography,RadioGroup, FormControlLabel, FormLabel,Checkbox,FormGroup, Select, MenuItem } from "@mui/material";
+import {IconButton, Button, Paper, Stack, TextField,Grid, Typography,RadioGroup, FormControlLabel, FormLabel,Checkbox,FormGroup, Select, MenuItem } from "@mui/material";
 
 import{blue, grey} from "@mui/material/colors";
 import SaveIcon from '@mui/icons-material/Save';
@@ -10,6 +10,8 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
+import Create from '@mui/icons-material/Create';
 
 export default function AlertDialog({parentToChild})  {
   
@@ -41,9 +43,11 @@ export default function AlertDialog({parentToChild})  {
 
   return (
     <div>
-      <Button variant="outlined" onClick={handleClickOpen}>
-        Modifier
-      </Button>
+       <ButtonGroup aria-label="outlined primary button group">
+        <IconButton color="success" size="small" onClick={handleClickOpen}>
+          <Create fontSize="inherit" />
+        </IconButton>
+      </ButtonGroup>
       <Dialog
         open={open}
         onClose={handleClose}
