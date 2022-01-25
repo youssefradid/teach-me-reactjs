@@ -3,7 +3,6 @@ import { BrowserRouter, Routes , Route } from 'react-router-dom';
 import RegisterForm from './pages/RegisterForm';
 import LoginForm from './pages/LoginForm';
 import PasswordRecoveryForm from './pages/PasswordRecoveryForm';
-import LandingPage from './pages/LandingPage';
 import SubscriptionPage from "./pages/SubscriptionPage";
 import Dashboard from "./pages/Dashboard";
 import NotFound from "./pages/NotFound";
@@ -25,7 +24,6 @@ export default function App(){
                 <Route path='/' element={<LoginForm/>}/>
                 <Route path='/password-recovery-from' element={<PasswordRecoveryForm/>}/>
                 <Route path='/delete-program-page' element={<Delete/>}/>
-                <Route path='/landing-Page' element={<LandingPage/>}/>
                 <Route path='/subcription-Page' element={<SubscriptionPage/>}/>
                 <Route path='/dashboard' element={<Dashboard/>}/>
                 <Route path='/learners' element={<Learners/>}/>

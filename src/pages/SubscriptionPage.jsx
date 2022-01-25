@@ -69,7 +69,7 @@ const nextStep = function(event){
   })
   })
  if(sessionId.length > 0 && currentStep == 3){
-  if(  checkedValue === "on"){
+  if(  checkedValue === "on" ){
       let souscription = {
         "learnerRef" : doc(getFirestore(), 'Leaner/' + learnerID),
         "packRef" : doc(getFirestore(), 'Pack/' + packId),
@@ -98,6 +98,7 @@ setCurrentStep(currentStep +1);
 
 const goBack = function(event){  setCurrentStep(currentStep -1);   }
 
+useEffect( () => {
 if(learnerID){
             
   LearnerService.getById(learnerID).then(function(learner){
@@ -120,6 +121,7 @@ if(learnerID){
         <Navigate to="/dashboard" />
     )
   }
+}, []);
 
     return(
 
